@@ -1,0 +1,76 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 120px;
+    background: linear-gradient(
+        241.25deg,
+        rgba(250, 250, 255, 0.35) 4.4%,
+        rgba(255, 255, 255, 0.53) 119.94%
+    );
+    box-shadow: -10px 33px 105px rgba(126, 123, 160, 23%);
+    border-radius: 16px;
+    padding: 0 20px;
+
+    &__logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logo-title {
+        letter-spacing: 5px;
+        font-size: 20px;
+    }
+
+    &__logo-title,
+    &__logo-subtitle {
+        font-weight: 600;
+    }
+
+    &__logo-svg {
+        width: 50px;
+    }
+
+    &__logo-subtitle {
+        font-size: 15px;
+    }
+
+    &__resources {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__sites-for-parse {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__epicentrk {
+        position: relative;
+        border: 1px solid #e2e2e8;
+        border-radius: 9px;
+        padding: 3px;
+    }
+
+    &__epicentrk-label:hover,
+    &__epicentrk-label:focus,
+    &__epicentrk-label:active {
+        cursor: pointer;
+    }
+
+    &__epicentrk_logo {
+        width: 50px;
+    }
+}
+
+#epicetrk_ua {
+    position: absolute;
+    opacity: 0;
+}

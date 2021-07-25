@@ -1,0 +1,19 @@
+.sidebar {
+    width: 20%;
+    min-height: 550px;
+    background: linear-gradient(
+        241.25deg,
+        rgba(250, 250, 255, 0.35) 4.4%,
+        rgba(255, 255, 255, 0.53) 119.94%
+    );
+    box-shadow: -10px 33px 105px #7e7ba0;
+    border-radius: 16px;
+    padding: 10px;
+
+    &__title {
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+}
