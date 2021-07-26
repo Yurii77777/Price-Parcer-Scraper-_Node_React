@@ -20,7 +20,7 @@ export const Header = () => {
                 <div className="header__sites-for-parse">
                     <div className="header__epicentrk">
                         <input type="checkbox" id="epicetrk_ua" name="epicetrk_ua" />
-                        <label for="epicetrk_ua" className="header__epicentrk-label">
+                        <label htmlFor="epicetrk_ua" className="header__epicentrk-label">
                             <img src={epicentr_logo} alt={"Epicentrk.ua"} className="header__epicentrk_logo" />
                         </label>
                     </div>

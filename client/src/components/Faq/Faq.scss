@@ -1,0 +1,89 @@
+.notifications {
+    position: absolute;
+    width: 381px;
+    height: 488px;
+    right: 70px;
+    top: 165px;
+    background: linear-gradient(
+        190.57deg,
+        rgba(255, 255, 255, 0.56) 19.25%,
+        rgba(248, 248, 255, 0.71) 54.39%,
+        rgba(255, 255, 255, 0.59) 90.02%
+    );
+    box-shadow: -8.54241px 41.5133px 119.594px rgba(126, 123, 160, 20%);
+    border-radius: 9px;
+    padding: 10px;
+    animation-name: show-notifications-window;
+    animation-duration: 2000ms;
+
+    &__title {
+        font-size: 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-align: center;
+        color: #4c4c66;
+        margin-bottom: 5px;
+    }
+
+    &__content-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex: 0 0 auto;
+    }
+
+    &__list {
+        list-style-type: none;
+        font-size: 13px;
+        width: 325px;
+    }
+
+    &__faq_logo {
+        width: 35px;
+        margin-right: 10px;
+    }
+
+    &__list > li {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        opacity: 1;
+        min-height: 20px;
+        line-height: 1.5;
+        padding: 2px;
+    }
+
+    &__list > li:nth-child(even) {
+        background: #e2e2e8;
+        border-radius: 5px;
+    }
+
+    &__button {
+        width: 25px;
+        height: 450px;
+        border: none;
+        background-color: transparent;
+    }
+
+    &__button:hover,
+    &__button:focus,
+    &__button:active {
+        cursor: pointer;
+    }
+
+    &__button::after {
+        content: '\1433';
+    }
+}
+
+@keyframes show-notifications-window {
+    0% {
+        right: -381px;
+        top: 165px;
+    }
+    100% {
+        right: 70px;
+        top: 165px;
+    }
+}
