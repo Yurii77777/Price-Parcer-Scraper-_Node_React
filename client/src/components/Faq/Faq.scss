@@ -87,3 +87,16 @@
         top: 165px;
     }
 }
+
+.notifications.hide {
+    width: 42px;
+}
+
+.notifications.hide .notifications__button::after {
+    content: '\1438';
+}
+
+.notifications.hide .notifications__title,
+.notifications.hide .notifications__list {
+    display: none;
+}
