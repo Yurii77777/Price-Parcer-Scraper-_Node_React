@@ -52,25 +52,27 @@
         align-items: center;
     }
 
-    &__epicentrk {
+    &__site {
         position: relative;
         border: 1px solid #e2e2e8;
         border-radius: 9px;
         padding: 3px;
+        margin-right: 5px;
     }
 
-    &__epicentrk-label:hover,
-    &__epicentrk-label:focus,
-    &__epicentrk-label:active {
+    &__site-label:hover,
+    &__site-label:focus,
+    &__site-label:active {
         cursor: pointer;
     }
 
-    &__epicentrk_logo {
+    &__site_logo {
         width: 50px;
     }
 }
 
-#epicetrk_ua {
+#epicetrk_ua,
+#rozetka_com_ua {
     position: absolute;
     opacity: 0;
 }
