@@ -21,6 +21,7 @@
     "mongoose": "^5.13.2",
     "prop-types": "^15.7.2",
     "puppeteer": "^10.1.0",
+    "react-hook-form": "^7.12.2",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {

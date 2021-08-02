@@ -1,15 +1,13 @@
-import PT from 'prop-types';
-
 import logo from '../../resources/images/main-logo.svg';
 import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
 import rozetka_logo from '../../resources/images/sites-icons/rozetka.png';
 
 import './Header.scss';
 
-export const Header = () => {
+export const Header = ({ setUserSelect }) => {
     const availableSites = [
         {
-            id: 1,
+            idSite: 1,
             inputId: 'rozetka_com_ua',
             inputName: 'rozetka_com_ua',
             srcLogo: rozetka_logo,
@@ -17,7 +15,7 @@ export const Header = () => {
             url: 'https://rozetka.com.ua/'
         },
         {
-            id: 2,
+            idSite: 2,
             inputId: 'epicetrk_ua',
             inputName: 'epicetrk_ua',
             srcLogo: epicentr_logo,
@@ -26,15 +24,14 @@ export const Header = () => {
         }
     ];
 
-    const handleSelectedSite = e => {
+    const getSelectedSite = e => {
         let userClick = e.target.id;
-        let selectedSite = availableSites.filter(({inputId}) => {
-
+        const [selectedSite] = availableSites.filter(({ inputId }) => {
             return inputId === userClick;
         });
-        console.log('[selectedSite]', selectedSite);
 
-        return selectedSite;
+        // console.log('[selectedSite]', selectedSite);
+        return setUserSelect(selectedSite);
     };
 
     return (
@@ -48,9 +45,9 @@ export const Header = () => {
             <section className="header__resources">
                 <div>Search input here</div>
                 <div className="header__sites-for-parse">
-                    {availableSites.map(({ id, srcLogo, altLogo, inputId, inputName }) => {
+                    {availableSites.map(({ idSite, srcLogo, altLogo, inputId, inputName }) => {
                         return (
-                            <div className="header__site" key={id} onClick={handleSelectedSite}>
+                            <div className="header__site" key={idSite} onClick={getSelectedSite}>
                                 <input type="checkbox" id={inputId} name={inputName} />
                                 <label htmlFor={inputId} className="header__site-label">
                                     <img

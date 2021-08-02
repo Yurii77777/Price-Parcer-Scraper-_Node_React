@@ -8,28 +8,22 @@ import faq_icon from '../../resources/images/faq.png';
 import info_icon from '../../resources/images/info.png';
 import './Faq.scss';
 
-//TODO: Add e.target on Head component, to get selected site for scraping;
-// Put secelted item from Head component to Faq
-// Set state of Head || Faq, to think!
+export const Faq = ({ altLogo }) => {
+    const notifications = [
+        {
+            idMessage: 1,
+            icon: faq_icon,
+            alt_for_icon: 'FAQ info',
+            message_en: 'At first you must check site for scraping in the top section of the App!'
+        },
+        {
+            idMessage: 2,
+            icon: info_icon,
+            alt_for_icon: 'Info info',
+            message_en: `You have selected ${altLogo} for scraping.`
+        }
+    ];
 
-let item = 'Epicentrk.ua';
-
-const notifications = [
-    {
-        id: 1,
-        icon: faq_icon,
-        alt_for_icon: 'FAQ info',
-        message_en: 'At first you must check site for scraping in the top section of the App!'
-    },
-    {
-        id: 2,
-        icon: info_icon,
-        alt_for_icon: 'Info info',
-        message_en: `You have selected ${item} for scraping.`
-    }
-];
-
-export const Faq = () => {
     let isHiddenFaqWindow = false;
     const [showFaqWindow, setShowFaqWindow] = useState(isHiddenFaqWindow);
 
@@ -46,28 +40,29 @@ export const Faq = () => {
 
             <div className="notifications__content-wrapper">
                 <ul className="notifications__list">
-                    {initialFaqMessages.length === 0 &&
-                        notifications.map(message => {
-                            if (message.id === 1) {
-                                const { id } = message;
-                                const { icon } = message;
-                                const { alt_for_icon } = message;
-                                const { message_en } = message;
+                    //TODO: Implement process interactive Faq. User select from header already is in altLogo.
+                    // Rename altLogo prop in Faq component
+                    {notifications.map(message => {
+                        if (message.idMessage === 1) {
+                            const { idMessage } = message;
+                            const { icon } = message;
+                            const { alt_for_icon } = message;
+                            const { message_en } = message;
 
-                                return (
-                                    <li key={id}>
-                                        <img
-                                            src={icon}
-                                            alt={alt_for_icon}
-                                            className={cn('notifications__faq_logo')}
-                                        />
-                                        {message_en}
-                                    </li>
-                                );
-                            }
+                            return (
+                                <li key={idMessage}>
+                                    <img
+                                        src={icon}
+                                        alt={alt_for_icon}
+                                        className={cn('notifications__faq_logo')}
+                                    />
+                                    {message_en}
+                                </li>
+                            );
+                        }
 
-                            return null;
-                        })}
+                        return null;
+                    })}
                 </ul>
 
                 <Button className="notifications__button" onClick={handleShowFaqWindow}>
