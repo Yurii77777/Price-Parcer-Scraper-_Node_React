@@ -3,12 +3,16 @@ import { useState } from 'react';
 import cn from 'classnames';
 
 import { Button } from '../UI-elements/Button/Button';
+import { isNewAppCycle } from '../../utils/isNewAppCycle';
 
 import faq_icon from '../../resources/images/faq.png';
 import info_icon from '../../resources/images/info.png';
 import './Faq.scss';
 
-export const Faq = ({ altLogo }) => {
+export const Faq = ({userSelect}) => {
+    let selectedSiteObj = userSelect;
+    // console.log('selectedSiteObj', selectedSiteObj);
+
     const notifications = [
         {
             idMessage: 1,
@@ -20,52 +24,95 @@ export const Faq = ({ altLogo }) => {
             idMessage: 2,
             icon: info_icon,
             alt_for_icon: 'Info info',
-            message_en: `You have selected ${altLogo} for scraping.`
+            message_en: 'You have selected "site" for scraping'
         }
     ];
 
-    let isHiddenFaqWindow = false;
-    const [showFaqWindow, setShowFaqWindow] = useState(isHiddenFaqWindow);
+    let appLog = {
+        appStarted: false,
+        lastIdFaqMes: null,
+        checkedSite: null
+    };
+    console.log('[appLog]', appLog);
 
-    const handleShowFaqWindow = () => {
-        showFaqWindow ? setShowFaqWindow(false) : setShowFaqWindow(true);
+    let isHiddenFaqWindow = false;
+    const [visibleFaqWindow, setVisibleFaqWindow] = useState(isHiddenFaqWindow);
+
+    // eslint-disable-next-line
+    const [faqMessages, setFaqMessages] = useState(notifications);
+
+    /**
+     * Function changes state value on "true" or "false"
+     * While state is "false", FAQ window (Component) is visible
+     */
+    const handleVisibleFaqWindow = () => {
+        visibleFaqWindow ? setVisibleFaqWindow(false) : setVisibleFaqWindow(true);
     };
 
-    const initialFaqMessages = [];
-    const [faqMessages, setFaqMessages] = useState(initialFaqMessages);
+    let appStatus = isNewAppCycle(appLog);
+    console.log('[appStatus]', appStatus);
+    
+    const handleSelectedSite = (selectedSiteObj = {}) => {
+        if (Object.keys(selectedSiteObj).length > 0) {
+            appLog.lastIdFaqMes = 2;
+            appLog.checkedSite = selectedSiteObj.url;
 
+            return selectedSiteObj;
+        }
+    };
+
+    let selectedSite = handleSelectedSite(selectedSiteObj);
+    console.log('[selectedSite]', selectedSite);
+    
+    console.log('* * * Next render * * *');
     return (
-        <section className={showFaqWindow ? cn('notifications hide') : cn('notifications')}>
+        <section className={visibleFaqWindow ? cn('notifications hide') : cn('notifications')}>
             <p className="notifications__title">Notifications | FAQ</p>
 
             <div className="notifications__content-wrapper">
                 <ul className="notifications__list">
-                    //TODO: Implement process interactive Faq. User select from header already is in altLogo.
-                    // Rename altLogo prop in Faq component
-                    {notifications.map(message => {
-                        if (message.idMessage === 1) {
-                            const { idMessage } = message;
-                            const { icon } = message;
-                            const { alt_for_icon } = message;
-                            const { message_en } = message;
+                    {appStatus
+                        ? faqMessages.map(({ idMessage, icon, alt_for_icon, message_en }) => {
+                              if (idMessage === 1) {
+                                  return (
+                                      <li key={idMessage}>
+                                          <img
+                                              src={icon}
+                                              alt={alt_for_icon}
+                                              className={cn('notifications__faq_logo')}
+                                          />
+                                          {message_en}
+                                      </li>
+                                  );
+                              }
 
-                            return (
-                                <li key={idMessage}>
-                                    <img
-                                        src={icon}
-                                        alt={alt_for_icon}
-                                        className={cn('notifications__faq_logo')}
-                                    />
-                                    {message_en}
-                                </li>
-                            );
-                        }
+                              return null;
+                          })
+                        : null}
+                    {selectedSite
+                        ? faqMessages.map(({ idMessage, icon, alt_for_icon, message_en }) => {
+                              if (idMessage === 2) {
+                                let messageEn = message_en.replace(/"site"/g, selectedSite.altLogo);
 
-                        return null;
-                    })}
+                                  return (
+                                      <li key={idMessage}>
+                                          <img
+                                              src={icon}
+                                              alt={alt_for_icon}
+                                              className={cn('notifications__faq_logo')}
+                                          />
+                                          {messageEn}
+                                      </li>
+                                  );
+                              }
+
+                              return null;
+                          })
+                        : null}
+                        
                 </ul>
 
-                <Button className="notifications__button" onClick={handleShowFaqWindow}>
+                <Button className="notifications__button" onClick={handleVisibleFaqWindow}>
                     <span></span>
                 </Button>
             </div>
