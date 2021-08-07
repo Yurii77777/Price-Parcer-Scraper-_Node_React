@@ -1,0 +1,49 @@
+.notifications__button {
+    width: 25px;
+    height: 450px;
+    border: none;
+    background-color: transparent;
+}
+
+.notifications__button:hover,
+.notifications__button:focus,
+.notifications__button:active {
+    cursor: pointer;
+}
+
+.notifications__button::after {
+    content: '\1433';
+}
+
+.submit-buttons__ok,
+.submit-buttons__cancel {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    width: 90px;
+    height: 38px;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.submit-buttons__ok {
+    background-color: #17a2b8;
+    margin-right: 20px;
+}
+
+.submit-buttons__ok:hover,
+.submit-buttons__ok:focus,
+.submit-buttons__ok:active {
+    background-color: #138496;
+}
+
+.submit-buttons__cancel {
+    background-color: #dc3545;
+}
+
+.submit-buttons__cancel:hover,
+.submit-buttons__cancel:focus,
+.submit-buttons__cancel:active {
+    background-color: #c82333;
+}

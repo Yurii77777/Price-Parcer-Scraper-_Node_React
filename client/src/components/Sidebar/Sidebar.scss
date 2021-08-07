@@ -1,5 +1,5 @@
 .sidebar {
-    width: 20%;
+    min-width: 250px;
     min-height: 550px;
     background: linear-gradient(
         241.25deg,
@@ -11,6 +11,7 @@
     padding: 10px;
 
     &__title {
+        font-size: 1.2rem;
         text-transform: uppercase;
         text-align: center;
         font-weight: 600;

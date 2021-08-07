@@ -1,7 +1,7 @@
 .notifications {
     position: absolute;
     width: 381px;
-    height: 488px;
+    max-height: 450px;
     right: 70px;
     top: 165px;
     background: linear-gradient(
@@ -59,22 +59,14 @@
         border-radius: 5px;
     }
 
-    &__button {
-        width: 25px;
-        height: 450px;
-        border: none;
-        background-color: transparent;
+    &__list .submit-buttons {
+        margin-top: 15px;
+        justify-content: center;
     }
+}
 
-    &__button:hover,
-    &__button:focus,
-    &__button:active {
-        cursor: pointer;
-    }
-
-    &__button::after {
-        content: '\1433';
-    }
+.submit-buttons.hide {
+    display: none;
 }
 
 @keyframes show-notifications-window {

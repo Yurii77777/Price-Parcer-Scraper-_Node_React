@@ -3,8 +3,8 @@ import cn from 'classnames';
 
 import './Button.scss';
 
-export const Button = ({type = 'button', variant, className, children, ...other}) => (
-    <button type={type} className={cn('button', `button--${variant}`, className)} {...other}>
+export const Button = ({type = 'button', className, children, ...other}) => (
+    <button type={type} className={cn('button', className)} {...other}>
         {children}
     </button>
 );
@@ -17,7 +17,6 @@ Button.propTypes = {
      * @children is required node which contain tags or text
      */
     type: PT.oneOf(['button', 'submit']),
-    variant: PT.oneOf(['primary', 'secondary']),
     className: PT.string,
     children: PT.node.isRequired
 };

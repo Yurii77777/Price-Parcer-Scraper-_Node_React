@@ -4,14 +4,18 @@ import cn from 'classnames';
 
 import { Button } from '../UI-elements/Button/Button';
 import { isNewAppCycle } from '../../utils/isNewAppCycle';
+import { useFetch } from '../../hooks/useFetch';
 
 import faq_icon from '../../resources/images/faq.png';
 import info_icon from '../../resources/images/info.png';
 import './Faq.scss';
 
-export const Faq = ({userSelect}) => {
+export const Faq = ({ userSelect }) => {
     let selectedSiteObj = userSelect;
     // console.log('selectedSiteObj', selectedSiteObj);
+    const { isLoading, 
+        // error, 
+        request } = useFetch();
 
     const notifications = [
         {
@@ -51,7 +55,7 @@ export const Faq = ({userSelect}) => {
 
     let appStatus = isNewAppCycle(appLog);
     console.log('[appStatus]', appStatus);
-    
+
     const handleSelectedSite = (selectedSiteObj = {}) => {
         if (Object.keys(selectedSiteObj).length > 0) {
             appLog.lastIdFaqMes = 2;
@@ -63,8 +67,21 @@ export const Faq = ({userSelect}) => {
 
     let selectedSite = handleSelectedSite(selectedSiteObj);
     console.log('[selectedSite]', selectedSite);
-    
-    console.log('* * * Next render * * *');
+
+    const handleCancel = () => {
+        //TODO: Clear Faq messages by click, return by default appLog
+    };
+
+    const getSiteCategories = async () => {
+        try {
+            const data = await request('/api/categories/get', 'POST', appLog);
+            console.log('[data]', data);
+        } catch (error) {
+            console.log('[error]', error);
+        }
+    };
+
+    console.log('%c* * * * * Next render * * * * *', 'color: blue; font-weight: bold');
     return (
         <section className={visibleFaqWindow ? cn('notifications hide') : cn('notifications')}>
             <p className="notifications__title">Notifications | FAQ</p>
@@ -92,7 +109,10 @@ export const Faq = ({userSelect}) => {
                     {selectedSite
                         ? faqMessages.map(({ idMessage, icon, alt_for_icon, message_en }) => {
                               if (idMessage === 2) {
-                                let messageEn = message_en.replace(/"site"/g, selectedSite.altLogo);
+                                  let messageEn = message_en.replace(
+                                      /"site"/g,
+                                      selectedSite.altLogo
+                                  );
 
                                   return (
                                       <li key={idMessage}>
@@ -109,7 +129,29 @@ export const Faq = ({userSelect}) => {
                               return null;
                           })
                         : null}
-                        
+
+                    <li
+                        className={
+                            appLog.lastIdFaqMes === 2
+                                ? cn('submit-buttons')
+                                : cn('submit-buttons hide')
+                        }
+                    >
+                        <Button
+                            className="submit-buttons__ok"
+                            onClick={getSiteCategories}
+                            disabled={isLoading}
+                        >
+                            Ok
+                        </Button>
+                        <Button
+                            className="submit-buttons__cancel"
+                            onClick={handleCancel}
+                            disabled={isLoading}
+                        >
+                            Cancel
+                        </Button>
+                    </li>
                 </ul>
 
                 <Button className="notifications__button" onClick={handleVisibleFaqWindow}>
