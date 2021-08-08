@@ -23,6 +23,7 @@ export const useFetch = () => {
                 }
 
                 setData(result);
+                // console.log('[result]', result);
 
                 return result;
             } catch (error) {

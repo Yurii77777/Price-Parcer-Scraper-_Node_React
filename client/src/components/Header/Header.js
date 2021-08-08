@@ -1,6 +1,6 @@
 import logo from '../../resources/images/main-logo.svg';
 import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
-import rozetka_logo from '../../resources/images/sites-icons/rozetka.png';
+// import rozetka_logo from '../../resources/images/sites-icons/rozetka.png';
 
 import './Header.scss';
 

@@ -13,7 +13,9 @@ router.post('/get', async (req, res) => {
 
         if (baseUrl) {
             const browserInstance = browserObject.startBrowser(baseUrl);
-            categoriesController(browserInstance);
+            let data = await categoriesController(browserInstance);
+
+            res.json(data);
         }
     } catch (error) {
         res.status(500).json({ message: "Server don't answer, please try again" });

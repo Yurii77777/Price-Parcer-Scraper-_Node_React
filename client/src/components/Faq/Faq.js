@@ -54,7 +54,7 @@ export const Faq = ({ userSelect }) => {
     };
 
     let appStatus = isNewAppCycle(appLog);
-    console.log('[appStatus]', appStatus);
+    // console.log('[appStatus]', appStatus);
 
     const handleSelectedSite = (selectedSiteObj = {}) => {
         if (Object.keys(selectedSiteObj).length > 0) {
@@ -66,7 +66,7 @@ export const Faq = ({ userSelect }) => {
     };
 
     let selectedSite = handleSelectedSite(selectedSiteObj);
-    console.log('[selectedSite]', selectedSite);
+    // console.log('[selectedSite]', selectedSite);
 
     const handleCancel = () => {
         //TODO: Clear Faq messages by click, return by default appLog

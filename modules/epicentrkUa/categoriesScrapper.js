@@ -46,11 +46,13 @@ const scraperObject = {
                 
                 parentCategories.push(categoryItm);
             }
-            console.log('[parentCategories]', parentCategories);
+            // console.log('[parentCategories]', parentCategories);
+            return parentCategories;
         }
 
         let data = await scrapeCurrentPage();
-        // // console.log(data);
+        // console.log('[data_from_categoriesScrapper]', data);
+        return data;
     }
 };
 
