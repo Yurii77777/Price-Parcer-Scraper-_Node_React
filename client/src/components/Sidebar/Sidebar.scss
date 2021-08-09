@@ -16,5 +16,24 @@
         text-align: center;
         font-weight: 600;
         letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    &__categories-list {
+        font-size: 1.4rem;
+        overflow-y: scroll;
+        border-radius: 10px;
+    }
+
+    &__categories-list > li {
+        padding: 0.4rem 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    &__categories-list > li:hover {
+        cursor: pointer;
+        color: #fff;
+        background-color: #7e7ba0;
+        border-color: #7e7ba0;
     }
 }

@@ -3,19 +3,22 @@ import { useState } from 'react';
 import cn from 'classnames';
 
 import { Button } from '../UI-elements/Button/Button';
-import { isNewAppCycle } from '../../utils/isNewAppCycle';
+import { updateAppLog } from '../../utils/updateAppLog';
 import { useFetch } from '../../hooks/useFetch';
 
 import faq_icon from '../../resources/images/faq.png';
 import info_icon from '../../resources/images/info.png';
 import './Faq.scss';
 
-export const Faq = ({ userSelect }) => {
+export const Faq = ({ userSelect, setScapedCategories }) => {
     let selectedSiteObj = userSelect;
     // console.log('selectedSiteObj', selectedSiteObj);
-    const { isLoading, 
-        // error, 
-        request } = useFetch();
+    const {
+        isLoading,
+        data,
+        // error,
+        request
+    } = useFetch();
 
     const notifications = [
         {
@@ -29,21 +32,32 @@ export const Faq = ({ userSelect }) => {
             icon: info_icon,
             alt_for_icon: 'Info info',
             message_en: 'You have selected "site" for scraping'
+        },
+        {
+            idMessage: 3,
+            icon: faq_icon,
+            alt_for_icon: 'FAQ info',
+            message_en:
+                'Our magic scripts getting all available categories from selected site. Wait for results, please ;)'
+        },
+        {
+            idMessage: 4,
+            icon: faq_icon,
+            alt_for_icon: 'Info info',
+            message_en:
+                'And now you can select category you need to parse from available categories'
         }
     ];
 
     let appLog = {
-        appStarted: false,
+        appAtStart: false,
         lastIdFaqMes: null,
         checkedSite: null
     };
-    console.log('[appLog]', appLog);
+    // console.log('[appLog]', appLog);
 
     let isHiddenFaqWindow = false;
     const [visibleFaqWindow, setVisibleFaqWindow] = useState(isHiddenFaqWindow);
-
-    // eslint-disable-next-line
-    const [faqMessages, setFaqMessages] = useState(notifications);
 
     /**
      * Function changes state value on "true" or "false"
@@ -53,11 +67,12 @@ export const Faq = ({ userSelect }) => {
         visibleFaqWindow ? setVisibleFaqWindow(false) : setVisibleFaqWindow(true);
     };
 
-    let appStatus = isNewAppCycle(appLog);
-    // console.log('[appStatus]', appStatus);
+    let updAppLog = updateAppLog(appLog);
+    // console.log('[updAppLog]', updAppLog);
 
     const handleSelectedSite = (selectedSiteObj = {}) => {
         if (Object.keys(selectedSiteObj).length > 0) {
+            appLog.appAtStart = false;
             appLog.lastIdFaqMes = 2;
             appLog.checkedSite = selectedSiteObj.url;
 
@@ -75,7 +90,8 @@ export const Faq = ({ userSelect }) => {
     const getSiteCategories = async () => {
         try {
             const data = await request('/api/categories/get', 'POST', appLog);
-            console.log('[data]', data);
+            setScapedCategories(data);
+            // console.log('[data]', data);
         } catch (error) {
             console.log('[error]', error);
         }
@@ -88,8 +104,8 @@ export const Faq = ({ userSelect }) => {
 
             <div className="notifications__content-wrapper">
                 <ul className="notifications__list">
-                    {appStatus
-                        ? faqMessages.map(({ idMessage, icon, alt_for_icon, message_en }) => {
+                    {updAppLog.appAtStart
+                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
                               if (idMessage === 1) {
                                   return (
                                       <li key={idMessage}>
@@ -107,7 +123,7 @@ export const Faq = ({ userSelect }) => {
                           })
                         : null}
                     {selectedSite
-                        ? faqMessages.map(({ idMessage, icon, alt_for_icon, message_en }) => {
+                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
                               if (idMessage === 2) {
                                   let messageEn = message_en.replace(
                                       /"site"/g,
@@ -129,7 +145,6 @@ export const Faq = ({ userSelect }) => {
                               return null;
                           })
                         : null}
-
                     <li
                         className={
                             appLog.lastIdFaqMes === 2
@@ -152,6 +167,42 @@ export const Faq = ({ userSelect }) => {
                             Cancel
                         </Button>
                     </li>
+                    {isLoading
+                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
+                              if (idMessage === 3) {
+                                  return (
+                                      <li key={idMessage}>
+                                          <img
+                                              src={icon}
+                                              alt={alt_for_icon}
+                                              className={cn('notifications__faq_logo')}
+                                          />
+                                          {message_en}
+                                      </li>
+                                  );
+                              }
+
+                              return null;
+                          })
+                        : null}
+                    {data
+                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
+                              if (idMessage === 4) {
+                                  return (
+                                      <li key={idMessage}>
+                                          <img
+                                              src={icon}
+                                              alt={alt_for_icon}
+                                              className={cn('notifications__faq_logo')}
+                                          />
+                                          {message_en}
+                                      </li>
+                                  );
+                              }
+
+                              return null;
+                          })
+                        : null}
                 </ul>
 
                 <Button className="notifications__button" onClick={handleVisibleFaqWindow}>

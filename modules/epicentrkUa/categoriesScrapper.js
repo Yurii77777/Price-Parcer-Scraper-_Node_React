@@ -37,10 +37,12 @@ const scraperObject = {
             
             for(let i = 0; i < urls.length; i++) {
                 let categoryItm = {
+                    categoryId: null,
                     categoryName: null,
                     categoryUrl: null
                 };
                 
+                categoryItm.categoryId = urls.indexOf(urls[i]);
                 categoryItm.categoryName = names[i];
                 categoryItm.categoryUrl = urls[i];
                 

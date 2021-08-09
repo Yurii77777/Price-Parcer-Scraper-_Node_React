@@ -7,7 +7,7 @@ let scrapeAll = async browserInstance => {
     try {
         browser = await browserInstance;
 
-        scrapedData['Categories'] = await categoriesScrapper.scraper(browser);
+        scrapedData['categories'] = await categoriesScrapper.scraper(browser);
         await browser.close();
         
         
