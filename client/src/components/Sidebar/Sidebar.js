@@ -1,7 +1,7 @@
 import './Sidebar.scss';
 
-export const Sidebar = ({ scapedCategories }) => {
-    const categories = scapedCategories?.categories;
+export const Sidebar = ({scapedCategories}) => {
+    const categories = scapedCategories;
     console.log('[categories]', categories);
 
     return (

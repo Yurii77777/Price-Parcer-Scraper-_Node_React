@@ -13,12 +13,10 @@ import './Faq.scss';
 export const Faq = ({ userSelect, setScapedCategories }) => {
     let selectedSiteObj = userSelect;
     // console.log('selectedSiteObj', selectedSiteObj);
-    const {
-        isLoading,
-        data,
-        // error,
-        request
-    } = useFetch();
+    const { isLoading, 
+        data, 
+        // error, 
+        request } = useFetch();
 
     const notifications = [
         {
@@ -147,7 +145,7 @@ export const Faq = ({ userSelect, setScapedCategories }) => {
                         : null}
                     <li
                         className={
-                            appLog.lastIdFaqMes === 2
+                            appLog.lastIdFaqMes === 2 && !data
                                 ? cn('submit-buttons')
                                 : cn('submit-buttons hide')
                         }

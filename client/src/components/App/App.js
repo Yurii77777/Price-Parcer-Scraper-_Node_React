@@ -8,7 +8,7 @@ import { Footer } from '../Footer/Footer';
 
 export const App = () => {
     const [userSelect, setUserSelect] = useState({});
-    const [scapedCategories, setScapedCategories] = useState();
+    const [scapedCategories, setScapedCategories] = useState([]);
 
     return (
         <div className="wrapper">
