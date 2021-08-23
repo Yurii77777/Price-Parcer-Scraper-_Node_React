@@ -1,5 +1,7 @@
 .sidebar {
+    position: relative;
     min-width: 250px;
+    max-width: 300px;
     min-height: 550px;
     background: linear-gradient(
         241.25deg,
@@ -25,15 +27,44 @@
         border-radius: 10px;
     }
 
-    &__categories-list > li {
+    &__categories-top-item {
         padding: 0.4rem 1rem;
         border: 1px solid rgba(0, 0, 0, 0.125);
     }
 
-    &__categories-list > li:hover {
+    &__categories-top-item:hover,
+    &__categories-sub-item:hover {
         cursor: pointer;
         color: #fff;
         background-color: #7e7ba0;
         border-color: #7e7ba0;
     }
+
+    &__categories-top-item.active {
+        color: #fff;
+        background-color: #7e7ba0;
+        border-color: #7e7ba0;
+        border-radius: 5px;
+    }
+
+    &__subcategories-list,
+    &__sub-subcategories-list {
+        display: none;
+    }
+}
+
+.sidebar__categories-top-item:hover .sidebar__subcategories-list,
+.sidebar__subcategories-list:hover .sidebar__sub-subcategories-list {
+    display: block;
+    color: #000;
+}
+
+.sidebar__categories-top-item:hover > ul:first-child,
+.sidebar__subcategories-list:hover > ul:first-child {
+    margin-top: 5px;
+}
+
+.sidebar__categories-top-item:hover ul,
+.sidebar__subcategories-list:hover ul {
+    margin-bottom: 5px;
 }

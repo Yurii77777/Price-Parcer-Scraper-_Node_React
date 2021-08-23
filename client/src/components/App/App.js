@@ -7,20 +7,24 @@ import { HomePage } from '../../pages/HomePage/HomePage';
 import { Footer } from '../Footer/Footer';
 
 export const App = () => {
-    const [userSelect, setUserSelect] = useState({});
-    const [scapedCategories, setScapedCategories] = useState([]);
+    const [userSelectSite, setUserSelectSite] = useState({});
+    const [userSelectCategory, setUserSelectCategory] = useState({});
+    const [data, setData] = useState();
 
     return (
         <div className="wrapper">
-            <Header setUserSelect={setUserSelect} />
+            <Header setUserSelectSite={setUserSelectSite} />
 
             <main className="content-container">
-                <Sidebar scapedCategories={scapedCategories} />
-                <HomePage />
+                <Sidebar
+                    userSelectSite={userSelectSite}
+                    setUserSelectCategory={setUserSelectCategory}
+                />
+                <HomePage data={data} />
             </main>
 
+            <Faq userSelectSite={userSelectSite} userSelectCategory={userSelectCategory} setData={setData} />
             <Footer />
-            <Faq userSelect={userSelect} setScapedCategories={setScapedCategories} />
         </div>
     );
 };

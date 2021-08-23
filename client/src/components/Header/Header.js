@@ -4,7 +4,7 @@ import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
 
 import './Header.scss';
 
-export const Header = ({ setUserSelect }) => {
+export const Header = ({ setUserSelectSite }) => {
     const availableSites = [
         // {
         //     idSite: 1,
@@ -31,7 +31,7 @@ export const Header = ({ setUserSelect }) => {
         });
 
         // console.log('[selectedSite]', selectedSite);
-        return setUserSelect(selectedSite);
+        return setUserSelectSite(selectedSite);
     };
 
     return (

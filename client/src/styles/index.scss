@@ -2,6 +2,7 @@
 @import './variables.scss';
 @import '../components/Header/Header.scss';
 @import '../components/Faq/Faq.scss';
+@import '../pages/HomePage/HomePage.scss';
 @import '../components/UI-elements/Button/Button.scss';
 
 /* Font for Logo Title */
@@ -33,7 +34,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     width: 80%;
-    height: 100vh;
+    // height: 100vh;
     margin: 0 auto;
     background: radial-gradient(
         28.91% 81.86% at 6.93% 9.5%,

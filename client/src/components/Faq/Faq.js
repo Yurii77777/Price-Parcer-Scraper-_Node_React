@@ -4,19 +4,18 @@ import cn from 'classnames';
 
 import { Button } from '../UI-elements/Button/Button';
 import { updateAppLog } from '../../utils/updateAppLog';
-import { useFetch } from '../../hooks/useFetch';
 
 import faq_icon from '../../resources/images/faq.png';
 import info_icon from '../../resources/images/info.png';
 import './Faq.scss';
 
-export const Faq = ({ userSelect, setScapedCategories }) => {
-    let selectedSiteObj = userSelect;
+export const Faq = ({ userSelectSite, userSelectCategory, setData }) => {
+    let selectedSiteObj = userSelectSite;
     // console.log('selectedSiteObj', selectedSiteObj);
-    const { isLoading, 
-        data, 
-        // error, 
-        request } = useFetch();
+    const ws = new WebSocket('ws://localhost:5050');
+    ws.onopen = () => console.log('Соединение установлено');
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const notifications = [
         {
@@ -36,14 +35,20 @@ export const Faq = ({ userSelect, setScapedCategories }) => {
             icon: faq_icon,
             alt_for_icon: 'FAQ info',
             message_en:
-                'Our magic scripts getting all available categories from selected site. Wait for results, please ;)'
+                'Our magic scripts getting all available goods from selected category. Wait for results, please ;)'
         },
         {
             idMessage: 4,
             icon: faq_icon,
-            alt_for_icon: 'Info info',
+            alt_for_icon: 'FAQ info',
             message_en:
                 'And now you can select category you need to parse from available categories'
+        },
+        {
+            idMessage: 5,
+            icon: info_icon,
+            alt_for_icon: 'Info info',
+            message_en: 'You have selected "category" for scraping'
         }
     ];
 
@@ -81,18 +86,18 @@ export const Faq = ({ userSelect, setScapedCategories }) => {
     let selectedSite = handleSelectedSite(selectedSiteObj);
     // console.log('[selectedSite]', selectedSite);
 
-    const handleCancel = () => {
-        //TODO: Clear Faq messages by click, return by default appLog
-    };
+    const getGoodsData = () => {
+        const { catogoryUrl: url } = userSelectCategory;
+        ws.send(JSON.stringify({ event: 'getGoodsRequest', categoryUrl: url }));
+        setIsLoading(true);
 
-    const getSiteCategories = async () => {
-        try {
-            const data = await request('/api/categories/get', 'POST', appLog);
-            setScapedCategories(data);
-            // console.log('[data]', data);
-        } catch (error) {
-            console.log('[error]', error);
-        }
+        ws.onmessage = message => {
+            const { data } = message;
+            setData(JSON.parse(data));
+            // console.log('[JSON.parse(data)]', JSON.parse(data));
+        };
+
+        setIsLoading(false);
     };
 
     console.log('%c* * * * * Next render * * * * *', 'color: blue; font-weight: bold');
@@ -143,31 +148,9 @@ export const Faq = ({ userSelect, setScapedCategories }) => {
                               return null;
                           })
                         : null}
-                    <li
-                        className={
-                            appLog.lastIdFaqMes === 2 && !data
-                                ? cn('submit-buttons')
-                                : cn('submit-buttons hide')
-                        }
-                    >
-                        <Button
-                            className="submit-buttons__ok"
-                            onClick={getSiteCategories}
-                            disabled={isLoading}
-                        >
-                            Ok
-                        </Button>
-                        <Button
-                            className="submit-buttons__cancel"
-                            onClick={handleCancel}
-                            disabled={isLoading}
-                        >
-                            Cancel
-                        </Button>
-                    </li>
-                    {isLoading
+                    {selectedSite && !userSelectCategory
                         ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
-                              if (idMessage === 3) {
+                              if (idMessage === 4) {
                                   return (
                                       <li key={idMessage}>
                                           <img
@@ -183,9 +166,53 @@ export const Faq = ({ userSelect, setScapedCategories }) => {
                               return null;
                           })
                         : null}
-                    {data
+                    {Object.keys(userSelectCategory).length
                         ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
-                              if (idMessage === 4) {
+                              if (idMessage === 5) {
+                                  let messageEn = message_en.replace(
+                                      /"category"/g,
+                                      userSelectCategory.categoryName
+                                  );
+
+                                  return (
+                                      <li key={idMessage}>
+                                          <img
+                                              src={icon}
+                                              alt={alt_for_icon}
+                                              className={cn('notifications__faq_logo')}
+                                          />
+                                          {messageEn}
+                                      </li>
+                                  );
+                              }
+
+                              return null;
+                          })
+                        : null}
+                    <li
+                        className={
+                            Object.keys(userSelectCategory).length
+                                ? cn('submit-buttons')
+                                : cn('submit-buttons hide')
+                        }
+                    >
+                        <Button
+                            className="submit-buttons__ok"
+                            onClick={getGoodsData}
+                            disabled={isLoading}
+                        >
+                            Ok
+                        </Button>
+                        <Button
+                            className="submit-buttons__cancel"
+                            // disabled={isLoading}
+                        >
+                            Cancel
+                        </Button>
+                    </li>
+                    {isLoading
+                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
+                              if (idMessage === 3) {
                                   return (
                                       <li key={idMessage}>
                                           <img
