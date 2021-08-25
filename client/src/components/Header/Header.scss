@@ -31,12 +31,15 @@
         font-weight: 600;
     }
 
-    &__logo-svg {
+    &__logo-img {
         width: 50px;
+        margin-bottom: 10px;
+        opacity: 0.8;
     }
 
     &__logo-subtitle {
         font-size: 15px;
+        text-transform: uppercase;
     }
 
     &__resources {

@@ -5,23 +5,78 @@
 @import '../pages/HomePage/HomePage.scss';
 @import '../components/UI-elements/Button/Button.scss';
 
-/* Font for Logo Title */
 @font-face {
-    font-family: 'Didact Gothic';
+    font-family: 'Raleway';
     font-style: normal;
     font-weight: 400;
-    src: url('../resources/fonts/didact-gothic-v14-latin-regular.eot');
+    src: url('../resources/fonts/raleway-v22-latin_cyrillic-regular.eot');
     src: local(''),
-        url('../resources/fonts/didact-gothic-v14-latin-regular.eot?#iefix')
+        url('../resources/fonts/raleway-v22-latin_cyrillic-regular.eot?#iefix')
             format('embedded-opentype'),
-        url('../resources/fonts/didact-gothic-v14-latin-regular.woff2') format('woff2'),
-        url('../resources/fonts/didact-gothic-v14-latin-regular.woff') format('woff'),
-        url('../resources/fonts/didact-gothic-v14-latin-regular.ttf') format('truetype'),
-        url('../resources/fonts/didact-gothic-v14-latin-regular.svg#DidactGothic') format('svg');
+        url('../resources/fonts/raleway-v22-latin_cyrillic-regular.woff2') format('woff2'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-regular.woff') format('woff'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-regular.ttf') format('truetype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-regular.svg#Raleway') format('svg');
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../resources/fonts/raleway-v22-latin_cyrillic-600.eot');
+    src: local(''),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-600.eot?#iefix')
+            format('embedded-opentype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-600.woff2') format('woff2'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-600.woff') format('woff'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-600.ttf') format('truetype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-600.svg#Raleway') format('svg');
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../resources/fonts/raleway-v22-latin_cyrillic-800.eot');
+    src: local(''),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800.eot?#iefix')
+            format('embedded-opentype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800.woff2') format('woff2'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800.woff') format('woff'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800.ttf') format('truetype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800.svg#Raleway') format('svg');
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../resources/fonts/raleway-v22-latin_cyrillic-italic.eot');
+    src: local(''),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-italic.eot?#iefix')
+            format('embedded-opentype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-italic.woff2') format('woff2'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-italic.woff') format('woff'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-italic.ttf') format('truetype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-italic.svg#Raleway') format('svg');
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: italic;
+    font-weight: 800;
+    src: url('../resources/fonts/raleway-v22-latin_cyrillic-800italic.eot');
+    src: local(''),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800italic.eot?#iefix')
+            format('embedded-opentype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800italic.woff2') format('woff2'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800italic.woff') format('woff'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800italic.ttf') format('truetype'),
+        url('../resources/fonts/raleway-v22-latin_cyrillic-800italic.svg#Raleway') format('svg');
 }
 
 html {
-    font-family: 'Didact Gothic';
+    font-family: 'Raleway';
     font-size: 62.5%;
 }
 

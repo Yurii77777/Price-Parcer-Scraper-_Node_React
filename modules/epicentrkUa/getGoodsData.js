@@ -34,11 +34,13 @@ const getGoodsData = async (browser, catogoryUrl) => {
                     await newPage.goto(link);
 
                     dataObj['goodId'] = index;
+                    dataObj['goodUrl'] = link;
 
-                    dataObj['goodTitle'] = await newPage.$eval(
-                        'h1',
-                        text => text.textContent
-                    );
+                    try {
+                        dataObj['goodTitle'] = await newPage.$eval('h1', text => text.textContent);
+                    } catch (error) {
+                        dataObj['goodTitle'] = 'Product name not defined';
+                    }
                     // Price may be absent because it's don't filter value "In stock"
                     try {
                         dataObj['goodPrice'] = await newPage.$eval('.p-price__main', text =>
@@ -48,17 +50,37 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         dataObj['goodPrice'] = 0;
                     }
 
-                    // dataObj['goodStatus'] = await newPage.$eval('.p-block__status', text =>
-                    //     text.textContent.replace(/(\r\n\t|\n|\r|\t|])/gm, '')
-                    // );
+                    try {
+                        dataObj['goodStatus'] = await newPage.$eval('.p-block__status', text =>
+                            text.textContent.replace(/(\r\n\t|\n|\r|\t|])/gm, '')
+                        );
+                    } catch (error) {
+                        dataObj['goodStatus'] = await newPage.$eval('.text-status', text =>
+                            text.textContent.replace(/(\r\n\t|\n|\r|\t|])/gm, '')
+                        );
+                    }
+
                     // dataObj['goodCode'] = await newPage.$eval(
-                    //     'div[data=data-code]',
+                    //     '.nc.p-block__code',
                     //     text => text.textContent
                     // );
-                    // dataObj['goodSeller'] = await newPage.$eval('.p-block__title-value', text =>
-                    //     text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
-                    // );
-                    // dataObj['goodImgUrl'] = await newPage.$eval('.p-slider__photo', img => img.src);
+
+                    try {
+                        dataObj['goodSeller'] = await newPage.$eval('.p-block__title-value', text =>
+                            text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
+                        );
+                    } catch (error) {
+                        dataObj['goodSeller'] = 'Undefined';
+                    }
+
+                    try {
+                        dataObj['goodImgUrl'] = await newPage.$eval('.swiper-lazy', img => img.src);
+                    } catch (error) {
+                        dataObj['goodImgUrl'] = await newPage.$eval(
+                            '.p-slider__photo',
+                            img => img.src
+                        );
+                    }
                     await newPage.close();
                     resolve(dataObj);
                 });

@@ -17,24 +17,30 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory }) => {
 
     const handleCategorySelect = e => {
         let detectedCategoryName = e.target.firstChild.data;
-        // console.log('[detectedCategoryName]', detectedCategoryName);
         let selectedCategoryName = null;
+
+        // console.log('[decetedCategoryItem]', decetedCategoryItem.nextSibling);
 
         availableCategories.forEach(({ siteName, categories }) => {
             selectedSite === siteName &&
                 categories.forEach(siteObj => {
-                    siteObj.categoryName === detectedCategoryName && (selectedCategoryName = siteObj);
-                    siteObj.categoryName !== detectedCategoryName && (siteObj.subategories.forEach((siteObj) => {
-                        siteObj.categoryName === detectedCategoryName && (selectedCategoryName = siteObj);
-                        siteObj.categoryName !== detectedCategoryName && (siteObj.subategories.forEach((siteObj) => {
-                            siteObj.categoryName === detectedCategoryName && (selectedCategoryName = siteObj);
-                        }));
-                    }));
+                    siteObj.categoryName === detectedCategoryName &&
+                        (selectedCategoryName = siteObj);
+                    siteObj.categoryName !== detectedCategoryName &&
+                        siteObj.subcategories.forEach(siteObj => {
+                            siteObj.categoryName === detectedCategoryName &&
+                                (selectedCategoryName = siteObj);
+                            siteObj.categoryName !== detectedCategoryName &&
+                                siteObj.subcategories.forEach(siteObj => {
+                                    siteObj.categoryName === detectedCategoryName &&
+                                        (selectedCategoryName = siteObj);
+                                });
+                        });
                 });
         });
 
         setUserSelectCategory(selectedCategoryName);
-        console.log('[selectedCategoryName]', selectedCategoryName);
+        // console.log('[selectedCategoryName]', selectedCategoryName);
     };
 
     return (
@@ -44,7 +50,7 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory }) => {
             <ul className="sidebar__categories-list">
                 {filteredCategories
                     ? filteredCategories[0].categories.map(
-                          ({ categoryId, categoryName, subategories }) => {
+                          ({ categoryId, categoryName, subcategories }) => {
                               return (
                                   <li
                                       key={categoryId}
@@ -53,14 +59,15 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory }) => {
                                   >
                                       {categoryName}
 
-                                      {subategories.length
-                                          ? subategories.map(
-                                                ({ categoryId, categoryName, subategories }) => {
-                                                    return (
-                                                        <ul
-                                                            className="sidebar__subcategories-list"
-                                                            key={categoryId + 1}
-                                                        >
+                                      <ul className="sidebar__subcategories-list">
+                                          {subcategories.length
+                                              ? subcategories.map(
+                                                    ({
+                                                        categoryId,
+                                                        categoryName,
+                                                        subcategories
+                                                    }) => {
+                                                        return (
                                                             <li
                                                                 key={categoryId}
                                                                 className="sidebar__subcategories-item"
@@ -68,21 +75,15 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory }) => {
                                                             >
                                                                 {categoryName}
 
-                                                                {subategories.length
-                                                                    ? subategories.map(
-                                                                          ({
-                                                                              categoryId,
-                                                                              categoryName,
-                                                                              subategories
-                                                                          }) => {
-                                                                              return (
-                                                                                  <ul
-                                                                                      className="sidebar__sub-subcategories-list"
-                                                                                      key={
-                                                                                          categoryId +
-                                                                                          1
-                                                                                      }
-                                                                                  >
+                                                                <ul className="sidebar__sub-subcategories-list">
+                                                                    {subcategories.length
+                                                                        ? subcategories.map(
+                                                                              ({
+                                                                                  categoryId,
+                                                                                  categoryName,
+                                                                                  subcategories
+                                                                              }) => {
+                                                                                  return (
                                                                                       <li
                                                                                           key={
                                                                                               categoryId
@@ -96,17 +97,17 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory }) => {
                                                                                               categoryName
                                                                                           }
                                                                                       </li>
-                                                                                  </ul>
-                                                                              );
-                                                                          }
-                                                                      )
-                                                                    : null}
+                                                                                  );
+                                                                              }
+                                                                          )
+                                                                        : null}
+                                                                </ul>
                                                             </li>
-                                                        </ul>
-                                                    );
-                                                }
-                                            )
-                                          : null}
+                                                        );
+                                                    }
+                                                )
+                                              : null}
+                                      </ul>
                                   </li>
                               );
                           }

@@ -1,24 +1,231 @@
 import './HomePage.scss';
+// import noImage from '../../resources/images/no-image-icon.png';
 
-export const HomePage = ({ data }) => {
+export const HomePage = ({ data, isLoading }) => {
     return (
         <ul className="goods-list">
+            {isLoading && (
+                <div class="socket">
+                    <div class="gel center-gel">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c1 r1">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c2 r1">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c3 r1">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c4 r1">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c5 r1">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c6 r1">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+
+                    <div class="gel c7 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+
+                    <div class="gel c8 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c9 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c10 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c11 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c12 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c13 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c14 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c15 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c16 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c17 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c18 r2">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c19 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c20 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c21 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c22 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c23 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c24 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c25 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c26 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c28 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c29 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c30 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c31 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c32 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c33 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c34 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c35 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c36 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                    <div class="gel c37 r3">
+                        <div class="hex-brick h1"></div>
+                        <div class="hex-brick h2"></div>
+                        <div class="hex-brick h3"></div>
+                    </div>
+                </div>
+            )}
             {data && (
                 <li className="goods-list__top-item" key={1.11}>
+                    <p className="goods-list__top-item-image">Img</p>
                     <p className="goods-list__top-item-title">Title</p>
                     <p className="goods-list__top-item-price">Price, UAH</p>
+                    <p className="goods-list__top-item-seller">Seller</p>
+                    <p className="goods-list__top-item-status">Status</p>
+                    <p className="goods-list__top-item-url">URL</p>
                 </li>
             )}
 
             {data &&
-                data.map(({ goodTitle, goodPrice, goodId }) => {
+                data.map(({ goodId, goodTitle, goodPrice, goodSeller, goodStatus, goodUrl, goodImgUrl }) => {
                     return (
                         <li className="goods-list__item" key={goodId}>
+                            <p className="goods-list__item-image"></p>
                             <p className="goods-list__item-title">{goodTitle}</p>
-                            <p className="goods-list__item-price">{goodPrice}</p>
+                            <p className="goods-list__item-price">{Number(goodPrice).toFixed(2)}</p>
+                            <p className="goods-list__item-seller">{goodSeller}</p>
+                            <p className="goods-list__item-status">{goodStatus}</p>
+                            <a href={goodUrl} className="goods-list__item-url" target="_blank"></a>
                         </li>
                     );
                 })}
+
+            {data && (
+                <li className="goods-list__bottom-item" key={3.33}>
+                    <p className="goods-list__bottom-item-title">Total goods, pcs</p>
+                    <p className="goods-list__bottom-item-quantity">{data.length + 1}</p>
+                </li>
+            )}
         </ul>
     );
 };

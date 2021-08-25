@@ -9,13 +9,11 @@ import faq_icon from '../../resources/images/faq.png';
 import info_icon from '../../resources/images/info.png';
 import './Faq.scss';
 
-export const Faq = ({ userSelectSite, userSelectCategory, setData }) => {
+export const Faq = ({ userSelectSite, userSelectCategory, setData, setIsLoading, isLoading }) => {
     let selectedSiteObj = userSelectSite;
     // console.log('selectedSiteObj', selectedSiteObj);
     const ws = new WebSocket('ws://localhost:5050');
     ws.onopen = () => console.log('Соединение установлено');
-
-    const [isLoading, setIsLoading] = useState(false);
 
     const notifications = [
         {
@@ -88,16 +86,18 @@ export const Faq = ({ userSelectSite, userSelectCategory, setData }) => {
 
     const getGoodsData = () => {
         const { catogoryUrl: url } = userSelectCategory;
-        ws.send(JSON.stringify({ event: 'getGoodsRequest', categoryUrl: url }));
         setIsLoading(true);
-
+        ws.send(JSON.stringify({ event: 'getGoodsRequest', categoryUrl: url }));
+        console.log('[isLoading]', isLoading);
+        
         ws.onmessage = message => {
             const { data } = message;
             setData(JSON.parse(data));
             // console.log('[JSON.parse(data)]', JSON.parse(data));
+            setIsLoading(false);
+            console.log('[isLoading]', isLoading);
         };
 
-        setIsLoading(false);
     };
 
     console.log('%c* * * * * Next render * * * * *', 'color: blue; font-weight: bold');

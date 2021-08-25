@@ -10,6 +10,7 @@ export const App = () => {
     const [userSelectSite, setUserSelectSite] = useState({});
     const [userSelectCategory, setUserSelectCategory] = useState({});
     const [data, setData] = useState();
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <div className="wrapper">
@@ -20,10 +21,16 @@ export const App = () => {
                     userSelectSite={userSelectSite}
                     setUserSelectCategory={setUserSelectCategory}
                 />
-                <HomePage data={data} />
+                <HomePage data={data} isLoading={isLoading} />
             </main>
 
-            <Faq userSelectSite={userSelectSite} userSelectCategory={userSelectCategory} setData={setData} />
+            <Faq
+                userSelectSite={userSelectSite}
+                userSelectCategory={userSelectCategory}
+                setData={setData}
+                setIsLoading={setIsLoading}
+                isLoading={isLoading}
+            />
             <Footer />
         </div>
     );

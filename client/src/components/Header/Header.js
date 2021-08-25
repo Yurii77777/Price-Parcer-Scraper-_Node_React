@@ -1,4 +1,4 @@
-import logo from '../../resources/images/main-logo.svg';
+import logo from '../../resources/images/main-logo.png';
 import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
 // import rozetka_logo from '../../resources/images/sites-icons/rozetka.png';
 
@@ -37,8 +37,7 @@ export const Header = ({ setUserSelectSite }) => {
     return (
         <header className="header">
             <section className="header__logo">
-                <p className="header__logo-title">P&P</p>
-                <img src={logo} alt={'Price Parcer logo'} className="header__logo-svg" />
+                <img src={logo} alt={'Price Parcer logo'} className="header__logo-img" />
                 <p className="header__logo-subtitle">Price Parcer</p>
             </section>
 
