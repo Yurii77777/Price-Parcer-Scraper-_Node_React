@@ -26,6 +26,17 @@
         border-bottom: 1px solid rgba(76, 76, 102, 0.2);
     }
 
+    &__item-no-image,
+    &__item-good-image {
+        width: 25px;
+    }
+
+    &__item-good-image:hover {
+        cursor: pointer;
+        position: absolute;
+        width: 200px;
+    }
+
     &__item > a {
         text-decoration: none;
         padding: 5px 0;

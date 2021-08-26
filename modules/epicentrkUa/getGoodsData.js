@@ -47,7 +47,9 @@ const getGoodsData = async (browser, catogoryUrl) => {
                             text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
                         );
                     } catch (error) {
-                        dataObj['goodPrice'] = 0;
+                        dataObj['goodPrice'] = await newPage.$eval('.price-wrapper', text =>
+                        text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
+                    );
                     }
 
                     try {
@@ -65,22 +67,80 @@ const getGoodsData = async (browser, catogoryUrl) => {
                     //     text => text.textContent
                     // );
 
-                    try {
-                        dataObj['goodSeller'] = await newPage.$eval('.p-block__title-value', text =>
-                            text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
-                        );
-                    } catch (error) {
-                        dataObj['goodSeller'] = 'Undefined';
-                    }
+                    let isFirstSellerSelector = false;
+                    let firstSellerSelector = '';
 
                     try {
-                        dataObj['goodImgUrl'] = await newPage.$eval('.swiper-lazy', img => img.src);
+                        firstSellerSelector = await newPage.$eval(
+                            '.p-block__row--seller .p-seller .p-block__title span',
+                            text => text.textContent
+                        );
+                        isFirstSellerSelector = true;
                     } catch (error) {
-                        dataObj['goodImgUrl'] = await newPage.$eval(
-                            '.p-slider__photo',
-                            img => img.src
+                        isFirstSellerSelector = false;
+                    }
+
+                    if (isFirstSellerSelector) {
+                        dataObj['goodSeller'] = await newPage.$eval('.p-block__row--seller .p-seller .p-block__title span', text =>
+                            text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
                         );
                     }
+
+                    let isSecondSellerSelector = false;
+                    let secondSellerSelector = '';
+
+                    try {
+                        secondSellerSelector = await newPage.$eval(
+                            '.seller-section .seller-info .seller-name .seller-title span',
+                            text => text.textContent
+                        );
+                        isSecondSellerSelector = true;
+                    } catch (error) {
+                        isSecondSellerSelector = false;
+                    }
+
+                    if (isSecondSellerSelector) {
+                        dataObj['goodSeller'] = await newPage.$eval('.seller-section .seller-info .seller-name .seller-title span', text =>
+                            text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
+                        );
+                    }
+
+                    let isFirstImgSelector = false;
+                    let firstImgSelector = '';
+
+                    try {
+                        firstImgSelector = await newPage.$eval(
+                            '.swiper-lazy',
+                            img => img.src
+                        );
+                        isFirstImgSelector = true;
+                    } catch (error) {
+                        isFirstImgSelector = false;
+                    }
+
+                    if (isFirstImgSelector) {
+                        dataObj['goodImgUrl'] = await newPage.$eval('.swiper-lazy', img => img.src
+                        );
+                    }
+
+                    let isSecondImgSelector = false;
+                    let secondImgSelector = '';
+
+                    try {
+                        secondImgSelector = await newPage.$eval(
+                            '.p-slider__slide picture .p-slider__photo',
+                            img => img.src
+                        );
+                        isSecondImgSelector = true;
+                    } catch (error) {
+                        isSecondImgSelector = false;
+                    }
+
+                    if (isSecondImgSelector) {
+                        dataObj['goodImgUrl'] = await newPage.$eval('.p-slider__slide picture .p-slider__photo', img => img.src
+                        );
+                    }
+
                     await newPage.close();
                     resolve(dataObj);
                 });
