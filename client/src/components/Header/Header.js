@@ -4,7 +4,7 @@ import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
 
 import './Header.scss';
 
-export const Header = ({ setUserSelectSite }) => {
+export const Header = ({ setUserSelectSite, setLanguage, language }) => {
     const availableSites = [
         // {
         //     idSite: 1,
@@ -34,6 +34,14 @@ export const Header = ({ setUserSelectSite }) => {
         return setUserSelectSite(selectedSite);
     };
 
+    const handleLanguageSelect = e => {
+        let userClick = e.target;
+
+        userClick.className === 'header__laguage-en' && setLanguage('EN');
+        userClick.className === 'header__laguage-ua' && setLanguage('UA');
+        userClick.className === 'header__laguage-ru' && setLanguage('RU');
+    }
+
     return (
         <header className="header">
             <section className="header__logo">
@@ -61,7 +69,19 @@ export const Header = ({ setUserSelectSite }) => {
                 </div>
             </section>
 
-            <section className="header__right-block"> SOME OTHER INFO</section>
+            <section className="header__right-block">
+                <p className="header__laguage-title">
+                    {!language && 'Language'}
+                    {language === 'EN' && 'Language'}
+                    {language === 'UA' && 'Мова'}
+                    {language === 'RU' && 'Язык'}
+                </p>
+                <div className="header__laguage-container">
+                    <p className="header__laguage-en" onClick={handleLanguageSelect}>EN</p>
+                    <p className="header__laguage-ua" onClick={handleLanguageSelect}>UA</p>
+                    <p className="header__laguage-ru" onClick={handleLanguageSelect}>RU</p>
+                </div>
+            </section>
         </header>
     );
 };

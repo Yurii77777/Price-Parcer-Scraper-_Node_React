@@ -73,6 +73,31 @@
     &__site_logo {
         width: 50px;
     }
+
+    &__laguage-title {
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    &__laguage-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__laguage-en,
+    &__laguage-ua,
+    &__laguage-ru {
+        padding: 5px;
+    }
+
+    &__laguage-en:hover,
+    &__laguage-ua:hover,
+    &__laguage-ru:hover {
+        cursor: pointer;
+    }
 }
 
 #epicetrk_ua,

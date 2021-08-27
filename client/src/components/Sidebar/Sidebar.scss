@@ -40,7 +40,8 @@
     }
 
     &__subcategories-list,
-    &__sub-subcategories-list {
+    &__sub-subcategories-list,
+    &__sub-sub-subcategories-list {
         display: none;
     }
 
@@ -98,6 +99,7 @@
     }
 
     &__subcategories-item:hover .sidebar__sub-subcategories-list > li:hover {
+        position: relative;
         background-color: #e2e2e8;
     }
 
@@ -107,6 +109,36 @@
     }
 
     &__subcategories-item:hover .sidebar__sub-subcategories-list > li:last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    &__sub-subcategories-list > li:hover .sidebar__sub-sub-subcategories-list {
+        display: block;
+        position: absolute;
+        left: 190px;
+        top: 0px;
+        width: 150px;
+        padding: 5px;
+        z-index: 10;
+    }
+
+    &__sub-subcategories-list > li:hover .sidebar__sub-sub-subcategories-list > li {
+        font-size: 1.2rem;
+        padding: 3px;
+        background-color: rgba(76, 76, 102, 0.8);
+    }
+
+    &__sub-subcategories-list > li:hover .sidebar__sub-sub-subcategories-list > li:hover {
+        background-color: #e2e2e8;
+    }
+
+    &__sub-subcategories-list > li:hover .sidebar__sub-sub-subcategories-list > li:first-child {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    &__sub-subcategories-list > li:hover .sidebar__sub-sub-subcategories-list > li:last-child {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
     }

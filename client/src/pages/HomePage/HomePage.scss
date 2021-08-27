@@ -4,7 +4,7 @@
 
     &__top-item {
         display: grid;
-        grid-template-columns: 5% 40% 10% 20% 20% 5%;
+        grid-template-columns: 5% 10% 40% 10% 15% 15% 5%;
         justify-items: center;
         align-items: center;
         font-size: 1.5rem;
@@ -20,7 +20,7 @@
 
     &__item {
         display: grid;
-        grid-template-columns: 5% 40% 10% 20% 20% 5%;
+        grid-template-columns: 5% 10% 40% 10% 15% 15% 5%;
         font-size: 1.3rem;
         padding: 5px 0;
         border-bottom: 1px solid rgba(76, 76, 102, 0.2);
@@ -29,6 +29,11 @@
     &__item-no-image,
     &__item-good-image {
         width: 25px;
+    }
+
+    &__item-brand {
+        text-align: center;
+        align-self: center;
     }
 
     &__item-good-image:hover {

@@ -11,17 +11,19 @@ export const App = () => {
     const [userSelectCategory, setUserSelectCategory] = useState({});
     const [data, setData] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const [language, setLanguage] = useState();
 
     return (
         <div className="wrapper">
-            <Header setUserSelectSite={setUserSelectSite} />
+            <Header setUserSelectSite={setUserSelectSite} setLanguage={setLanguage} language={language} />
 
             <main className="content-container">
                 <Sidebar
                     userSelectSite={userSelectSite}
                     setUserSelectCategory={setUserSelectCategory}
+                    language={language}
                 />
-                <HomePage data={data} isLoading={isLoading} />
+                <HomePage data={data} isLoading={isLoading} language={language} />
             </main>
 
             <Faq
@@ -30,6 +32,7 @@ export const App = () => {
                 setData={setData}
                 setIsLoading={setIsLoading}
                 isLoading={isLoading}
+                language={language}
             />
             <Footer />
         </div>

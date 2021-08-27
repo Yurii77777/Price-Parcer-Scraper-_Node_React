@@ -41,16 +41,48 @@ const getGoodsData = async (browser, catogoryUrl) => {
                     } catch (error) {
                         dataObj['goodTitle'] = 'Product name not defined';
                     }
-                    // Price may be absent because it's don't filter value "In stock"
+
+                    /**
+                     * Finding Price selector Begin
+                     */
+                    let isFirstPriceSelector = false;
+                    let firstPriceSelector = '';
+
                     try {
+                        firstPriceSelector = await newPage.$eval(
+                            '.p-price__main',
+                            text => text.textContent
+                        );
+                        isFirstPriceSelector = true;
+                    } catch (error) {
+                        isFirstPriceSelector = false;
+                    }
+
+                    if (isFirstPriceSelector) {
                         dataObj['goodPrice'] = await newPage.$eval('.p-price__main', text =>
                             text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
                         );
-                    } catch (error) {
-                        dataObj['goodPrice'] = await newPage.$eval('.price-wrapper', text =>
-                        text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
-                    );
                     }
+
+                    let isSecondPriceSelector = false;
+                    let secondPriceSelector = '';
+
+                    try {
+                        secondPriceSelector = await newPage.$eval(
+                            '.price-wrapper',
+                            text => text.textContent
+                        );
+                        isSecondPriceSelector = true;
+                    } catch (error) {
+                        isSecondPriceSelector = false;
+                    }
+
+                    if (isSecondPriceSelector) {
+                        dataObj['goodPrice'] = await newPage.$eval('.price-wrapper', text =>
+                            text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
+                        );
+                    }
+                    // Finding Price selector End
 
                     try {
                         dataObj['goodStatus'] = await newPage.$eval('.p-block__status', text =>
@@ -62,11 +94,9 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         );
                     }
 
-                    // dataObj['goodCode'] = await newPage.$eval(
-                    //     '.nc.p-block__code',
-                    //     text => text.textContent
-                    // );
-
+                    /**
+                     * Finding Seller selector Begin
+                     */
                     let isFirstSellerSelector = false;
                     let firstSellerSelector = '';
 
@@ -81,8 +111,9 @@ const getGoodsData = async (browser, catogoryUrl) => {
                     }
 
                     if (isFirstSellerSelector) {
-                        dataObj['goodSeller'] = await newPage.$eval('.p-block__row--seller .p-seller .p-block__title span', text =>
-                            text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
+                        dataObj['goodSeller'] = await newPage.$eval(
+                            '.p-block__row--seller .p-seller .p-block__title span',
+                            text => text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
                         );
                     }
 
@@ -100,27 +131,48 @@ const getGoodsData = async (browser, catogoryUrl) => {
                     }
 
                     if (isSecondSellerSelector) {
-                        dataObj['goodSeller'] = await newPage.$eval('.seller-section .seller-info .seller-name .seller-title span', text =>
-                            text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
+                        dataObj['goodSeller'] = await newPage.$eval(
+                            '.seller-section .seller-info .seller-name .seller-title span',
+                            text => text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
                         );
                     }
 
+                    let isThirdSellerSelector = false;
+                    let thirdSellerSelector = '';
+
+                    try {
+                        thirdSellerSelector = await newPage.$eval(
+                            '.seller-logo-container .seller-logo',
+                            img => img.alt
+                        );
+                        isThirdSellerSelector = true;
+                    } catch (error) {
+                        isThirdSellerSelector = false;
+                    }
+
+                    if (isThirdSellerSelector) {
+                        dataObj['goodSeller'] = await newPage.$eval(
+                            '.seller-logo-container .seller-logo',
+                            img => img.alt
+                        );
+                    }
+                    // Finding Seller selector End
+
+                    /**
+                     * Finding Image selector Begin
+                     */
                     let isFirstImgSelector = false;
                     let firstImgSelector = '';
 
                     try {
-                        firstImgSelector = await newPage.$eval(
-                            '.swiper-lazy',
-                            img => img.src
-                        );
+                        firstImgSelector = await newPage.$eval('.swiper-lazy', img => img.src);
                         isFirstImgSelector = true;
                     } catch (error) {
                         isFirstImgSelector = false;
                     }
 
                     if (isFirstImgSelector) {
-                        dataObj['goodImgUrl'] = await newPage.$eval('.swiper-lazy', img => img.src
-                        );
+                        dataObj['goodImgUrl'] = await newPage.$eval('.swiper-lazy', img => img.src);
                     }
 
                     let isSecondImgSelector = false;
@@ -137,7 +189,50 @@ const getGoodsData = async (browser, catogoryUrl) => {
                     }
 
                     if (isSecondImgSelector) {
-                        dataObj['goodImgUrl'] = await newPage.$eval('.p-slider__slide picture .p-slider__photo', img => img.src
+                        dataObj['goodImgUrl'] = await newPage.$eval(
+                            '.p-slider__slide picture .p-slider__photo',
+                            img => img.src
+                        );
+                    }
+
+                    let isThirdImgSelector = false;
+                    let thirdImgSelector = '';
+
+                    try {
+                        thirdImgSelector = await newPage.$eval(
+                            '.slider-sticky-container .product-single-image',
+                            img => img.src
+                        );
+                        isThirdImgSelector = true;
+                    } catch (error) {
+                        isThirdImgSelector = false;
+                    }
+
+                    if (isThirdImgSelector) {
+                        dataObj['goodImgUrl'] = await newPage.$eval(
+                            '.slider-sticky-container .product-single-image',
+                            img => img.src
+                        );
+                    }
+                    //Finding Image selector End
+
+                    let isFirstBrandSelector = false;
+                    let firstBrandSelector = '';
+
+                    try {
+                        firstBrandSelector = await newPage.$eval(
+                            '.p-char .p-char__item .p-char__brand .p-char__brand-logo',
+                            img => img.alt
+                        );
+                        isFirstBrandSelector = true;
+                    } catch (error) {
+                        isFirstBrandSelector = false;
+                    }
+
+                    if (isFirstBrandSelector) {
+                        dataObj['goodBrand'] = await newPage.$eval(
+                            '.p-char .p-char__item .p-char__brand .p-char__brand-logo',
+                            img => img.alt
                         );
                     }
 

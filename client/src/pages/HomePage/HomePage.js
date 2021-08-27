@@ -1,7 +1,7 @@
 import './HomePage.scss';
 import noImage from '../../resources/images/no-image-icon.png';
 
-export const HomePage = ({ data, isLoading }) => {
+export const HomePage = ({ data, isLoading, language }) => {
     return (
         <ul className="goods-list">
             {isLoading && (
@@ -197,11 +197,42 @@ export const HomePage = ({ data, isLoading }) => {
             )}
             {data && (
                 <li className="goods-list__top-item" key={1.11}>
-                    <p className="goods-list__top-item-image">Img</p>
-                    <p className="goods-list__top-item-title">Title</p>
-                    <p className="goods-list__top-item-price">Price, UAH</p>
-                    <p className="goods-list__top-item-seller">Seller</p>
-                    <p className="goods-list__top-item-status">Status</p>
+                    <p className="goods-list__top-item-image">
+                        {!language && 'Img'}
+                        {language === 'EN' && 'Img'}
+                        {language === 'UA' && 'Зображ.'}
+                        {language === 'RU' && 'Изображ.'}
+                    </p>
+                    <p className="goods-list__top-item-brand">
+                        {!language && 'Brand'}
+                        {language === 'EN' && 'Brand'}
+                        {language === 'UA' && 'Бренд'}
+                        {language === 'RU' && 'Бренд'}
+                    </p>
+                    <p className="goods-list__top-item-title">
+                        {!language && 'Title'}
+                        {language === 'EN' && 'Title'}
+                        {language === 'UA' && 'Назва'}
+                        {language === 'RU' && 'Наименование'}
+                    </p>
+                    <p className="goods-list__top-item-price">
+                        {!language && 'Price, UAH'}
+                        {language === 'EN' && 'Price, UAH'}
+                        {language === 'UA' && 'Ціна, UAH'}
+                        {language === 'RU' && 'Цена, UAH'}
+                    </p>
+                    <p className="goods-list__top-item-seller">
+                        {!language && 'Seller'}
+                        {language === 'EN' && 'Seller'}
+                        {language === 'UA' && 'Продавець'}
+                        {language === 'RU' && 'Продавец'}
+                    </p>
+                    <p className="goods-list__top-item-status">
+                    {!language && 'Status'}
+                        {language === 'EN' && 'Status'}
+                        {language === 'UA' && 'Статус'}
+                        {language === 'RU' && 'Статус'}
+                    </p>
                     <p className="goods-list__top-item-url">URL</p>
                 </li>
             )}
@@ -210,6 +241,7 @@ export const HomePage = ({ data, isLoading }) => {
                 data.map(
                     ({
                         goodId,
+                        goodBrand,
                         goodTitle,
                         goodPrice,
                         goodSeller,
@@ -234,6 +266,7 @@ export const HomePage = ({ data, isLoading }) => {
                                         />
                                     )}
                                 </p>
+                                <p className="goods-list__item-brand">{goodBrand}</p>
                                 <p className="goods-list__item-title">{goodTitle}</p>
                                 <p className="goods-list__item-price">
                                     {Number(goodPrice).toFixed(2)}
@@ -254,7 +287,12 @@ export const HomePage = ({ data, isLoading }) => {
 
             {data && (
                 <li className="goods-list__bottom-item" key={3.33}>
-                    <p className="goods-list__bottom-item-title">Total goods, pcs</p>
+                    <p className="goods-list__bottom-item-title">
+                        {!language && 'Total goods, pcs'}
+                        {language === 'EN' && 'Total goods, pcs'}
+                        {language === 'UA' && 'Всього товарів, шт.'}
+                        {language === 'RU' && 'Всего товаров, шт.'}
+                        </p>
                     <p className="goods-list__bottom-item-quantity">{data.length + 1}</p>
                 </li>
             )}

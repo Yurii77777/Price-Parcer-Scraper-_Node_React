@@ -9,7 +9,14 @@ import faq_icon from '../../resources/images/faq.png';
 import info_icon from '../../resources/images/info.png';
 import './Faq.scss';
 
-export const Faq = ({ userSelectSite, userSelectCategory, setData, setIsLoading, isLoading }) => {
+export const Faq = ({
+    userSelectSite,
+    userSelectCategory,
+    setData,
+    setIsLoading,
+    isLoading,
+    language
+}) => {
     let selectedSiteObj = userSelectSite;
     // console.log('selectedSiteObj', selectedSiteObj);
     const ws = new WebSocket('ws://localhost:5050');
@@ -20,33 +27,45 @@ export const Faq = ({ userSelectSite, userSelectCategory, setData, setIsLoading,
             idMessage: 1,
             icon: faq_icon,
             alt_for_icon: 'FAQ info',
-            message_en: 'At first you must check site for scraping in the top section of the App!'
+            message_en: 'At first you must check site for scraping in the top section of the App!',
+            message_ua: 'Спочатку виберіть сайт для парсингу у верхній частині програми!',
+            message_ru: 'Сначала выберите сайт для парсинга в верхней части программы!'
         },
         {
             idMessage: 2,
             icon: info_icon,
             alt_for_icon: 'Info info',
-            message_en: 'You have selected "site" for scraping'
+            message_en: 'You have selected "site" for scraping',
+            message_ua: 'Ви вибрали "site" для парсингу',
+            message_ru: 'Вы выбрали "site" для парсинга'
         },
         {
             idMessage: 3,
             icon: faq_icon,
             alt_for_icon: 'FAQ info',
             message_en:
-                'Our magic scripts getting all available goods from selected category. Wait for results, please ;)'
+                'Our magic scripts getting all available goods from selected category. Wait for results, please ;)',
+            message_ua:
+                'Наші магічні скрипти отримують всі доступні товари з вибраної категорії. Зачекайте на результати, будь-ласка ;)',
+            message_ru:
+                'Наши магические скрипты получают все доступные товары с выбранной категории. Ожидайте на результаты, пожалуйста ;)'
         },
         {
             idMessage: 4,
             icon: faq_icon,
             alt_for_icon: 'FAQ info',
             message_en:
-                'And now you can select category you need to parse from available categories'
+                'And now you can select category you need to parse from available categories',
+            message_ua: 'Тепер Ви можете вибрати категорію із доступних для парсингу',
+            message_ru: 'Теперь Вы можете выбрать категорию из доступных для парсинга'
         },
         {
             idMessage: 5,
             icon: info_icon,
             alt_for_icon: 'Info info',
-            message_en: 'You have selected "category" for scraping'
+            message_en: 'You have selected "category" for scraping',
+            message_ua: 'Ви вибрали "category" для парсингу',
+            message_ru: 'Вы выбрали selected "category" для парсинга'
         }
     ];
 
@@ -89,7 +108,7 @@ export const Faq = ({ userSelectSite, userSelectCategory, setData, setIsLoading,
         setIsLoading(true);
         ws.send(JSON.stringify({ event: 'getGoodsRequest', categoryUrl: url }));
         console.log('[isLoading]', isLoading);
-        
+
         ws.onmessage = message => {
             const { data } = message;
             setData(JSON.parse(data));
@@ -97,97 +116,165 @@ export const Faq = ({ userSelectSite, userSelectCategory, setData, setIsLoading,
             setIsLoading(false);
             console.log('[isLoading]', isLoading);
         };
-
     };
 
     console.log('%c* * * * * Next render * * * * *', 'color: blue; font-weight: bold');
     return (
         <section className={visibleFaqWindow ? cn('notifications hide') : cn('notifications')}>
-            <p className="notifications__title">Notifications | FAQ</p>
+            <p className="notifications__title">
+                {!language && 'Notifications | FAQ'}
+                {language === 'EN' && 'Notifications | FAQ'}
+                {language === 'UA' && 'Повідомлення | FAQ'}
+                {language === 'RU' && 'Уведомления | FAQ'}
+            </p>
 
             <div className="notifications__content-wrapper">
                 <ul className="notifications__list">
                     {updAppLog.appAtStart
-                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
-                              if (idMessage === 1) {
-                                  return (
-                                      <li key={idMessage}>
-                                          <img
-                                              src={icon}
-                                              alt={alt_for_icon}
-                                              className={cn('notifications__faq_logo')}
-                                          />
-                                          {message_en}
-                                      </li>
-                                  );
-                              }
+                        ? notifications.map(
+                              ({
+                                  idMessage,
+                                  icon,
+                                  alt_for_icon,
+                                  message_en,
+                                  message_ua,
+                                  message_ru
+                              }) => {
+                                  if (idMessage === 1) {
+                                      return (
+                                          <li key={idMessage}>
+                                              <img
+                                                  src={icon}
+                                                  alt={alt_for_icon}
+                                                  className={cn('notifications__faq_logo')}
+                                              />
+                                              {!language && message_en}
+                                              {language === 'EN' && message_en}
+                                              {language === 'UA' && message_ua}
+                                              {language === 'RU' && message_ru}
+                                          </li>
+                                      );
+                                  }
 
-                              return null;
-                          })
+                                  return null;
+                              }
+                          )
                         : null}
                     {selectedSite
-                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
-                              if (idMessage === 2) {
-                                  let messageEn = message_en.replace(
-                                      /"site"/g,
-                                      selectedSite.altLogo
-                                  );
+                        ? notifications.map(
+                              ({
+                                  idMessage,
+                                  icon,
+                                  alt_for_icon,
+                                  message_en,
+                                  message_ua,
+                                  message_ru
+                              }) => {
+                                  if (idMessage === 2) {
+                                      let messageEn = message_en.replace(
+                                          /"site"/g,
+                                          selectedSite.altLogo
+                                      );
+                                      let messageUa = message_ua.replace(
+                                          /"site"/g,
+                                          selectedSite.altLogo
+                                      );
+                                      let messageRu = message_ru.replace(
+                                          /"site"/g,
+                                          selectedSite.altLogo
+                                      );
 
-                                  return (
-                                      <li key={idMessage}>
-                                          <img
-                                              src={icon}
-                                              alt={alt_for_icon}
-                                              className={cn('notifications__faq_logo')}
-                                          />
-                                          {messageEn}
-                                      </li>
-                                  );
+                                      return (
+                                          <li key={idMessage}>
+                                              <img
+                                                  src={icon}
+                                                  alt={alt_for_icon}
+                                                  className={cn('notifications__faq_logo')}
+                                              />
+                                              {!language && messageEn}
+                                              {language === 'EN' && messageEn}
+                                              {language === 'UA' && messageUa}
+                                              {language === 'RU' && messageRu}
+                                          </li>
+                                      );
+                                  }
+
+                                  return null;
                               }
-
-                              return null;
-                          })
+                          )
                         : null}
-                    {selectedSite && !userSelectCategory
-                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
-                              if (idMessage === 4) {
-                                  return (
-                                      <li key={idMessage}>
-                                          <img
-                                              src={icon}
-                                              alt={alt_for_icon}
-                                              className={cn('notifications__faq_logo')}
-                                          />
-                                          {message_en}
-                                      </li>
-                                  );
-                              }
+                    {selectedSite && !Object.keys(userSelectCategory).length
+                        ? notifications.map(
+                              ({
+                                  idMessage,
+                                  icon,
+                                  alt_for_icon,
+                                  message_en,
+                                  message_ua,
+                                  message_ru
+                              }) => {
+                                  if (idMessage === 4) {
+                                      return (
+                                          <li key={idMessage}>
+                                              <img
+                                                  src={icon}
+                                                  alt={alt_for_icon}
+                                                  className={cn('notifications__faq_logo')}
+                                              />
+                                              {!language && message_en}
+                                              {language === 'EN' && message_en}
+                                              {language === 'UA' && message_ua}
+                                              {language === 'RU' && message_ru}
+                                          </li>
+                                      );
+                                  }
 
-                              return null;
-                          })
+                                  return null;
+                              }
+                          )
                         : null}
                     {Object.keys(userSelectCategory).length
-                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
-                              if (idMessage === 5) {
-                                  let messageEn = message_en.replace(
-                                      /"category"/g,
-                                      userSelectCategory.categoryName
-                                  );
+                        ? notifications.map(
+                              ({
+                                  idMessage,
+                                  icon,
+                                  alt_for_icon,
+                                  message_en,
+                                  message_ua,
+                                  message_ru
+                              }) => {
+                                  if (idMessage === 5) {
+                                      let messageEn = message_en.replace(
+                                          /"category"/g,
+                                          userSelectCategory.categoryName
+                                      );
+                                      let messageUa = message_ua.replace(
+                                          /"category"/g,
+                                          userSelectCategory.categoryName
+                                      );
+                                      let messageRu = message_ru.replace(
+                                          /"category"/g,
+                                          userSelectCategory.categoryName
+                                      );
 
-                                  return (
-                                      <li key={idMessage}>
-                                          <img
-                                              src={icon}
-                                              alt={alt_for_icon}
-                                              className={cn('notifications__faq_logo')}
-                                          />
-                                          {messageEn}
-                                      </li>
-                                  );
+                                      return (
+                                          <li key={idMessage}>
+                                              <img
+                                                  src={icon}
+                                                  alt={alt_for_icon}
+                                                  className={cn('notifications__faq_logo')}
+                                              />
+                                              {!language && messageEn}
+                                              {language === 'EN' && messageEn}
+                                              {language === 'UA' && messageUa}
+                                              {language === 'RU' && messageRu}
+                                          </li>
+                                      );
+                                  }
+
+                                  return null;
                               }
-
-                              return null;
-                          })
+                          )
                         : null}
                     <li
                         className={
@@ -211,22 +298,34 @@ export const Faq = ({ userSelectSite, userSelectCategory, setData, setIsLoading,
                         </Button>
                     </li>
                     {isLoading
-                        ? notifications.map(({ idMessage, icon, alt_for_icon, message_en }) => {
-                              if (idMessage === 3) {
-                                  return (
-                                      <li key={idMessage}>
-                                          <img
-                                              src={icon}
-                                              alt={alt_for_icon}
-                                              className={cn('notifications__faq_logo')}
-                                          />
-                                          {message_en}
-                                      </li>
-                                  );
-                              }
+                        ? notifications.map(
+                              ({
+                                  idMessage,
+                                  icon,
+                                  alt_for_icon,
+                                  message_en,
+                                  message_ua,
+                                  message_ru
+                              }) => {
+                                  if (idMessage === 3) {
+                                      return (
+                                          <li key={idMessage}>
+                                              <img
+                                                  src={icon}
+                                                  alt={alt_for_icon}
+                                                  className={cn('notifications__faq_logo')}
+                                              />
+                                              {!language && message_en}
+                                              {language === 'EN' && message_en}
+                                              {language === 'UA' && message_ua}
+                                              {language === 'RU' && message_ru}
+                                          </li>
+                                      );
+                                  }
 
-                              return null;
-                          })
+                                  return null;
+                              }
+                          )
                         : null}
                 </ul>
 
