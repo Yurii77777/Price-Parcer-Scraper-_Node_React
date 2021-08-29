@@ -1,4 +1,4 @@
-import { availableCategories } from '../modules/epicetrkAvailableCategories';
+import { epicetrkUaCategories } from '../modules/epicetrkAvailableCategories';
 
 import './Sidebar.scss';
 
@@ -7,40 +7,55 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory, language }) => 
     // console.log('[selectedSite]', selectedSite);
 
     let filteredCategories = null;
-    // console.log('[availableCategories]', availableCategories);
 
     if (selectedSite) {
-        filteredCategories = availableCategories.filter(
+        filteredCategories = epicetrkUaCategories.filter(
             ({ siteName }) => siteName === selectedSite
         );
     }
 
     const handleCategorySelect = e => {
         let detectedCategoryName = e.target.firstChild.data;
-        let selectedCategoryName = null;
+        let selectedCategoryObj = null;
 
-        // console.log('[decetedCategoryItem]', decetedCategoryItem.nextSibling);
+        // console.log('[detectedCategoryName]', detectedCategoryName);
 
-        availableCategories.forEach(({ siteName, categories }) => {
-            selectedSite === siteName &&
+        const getSelectedCategory = availableCategories => {
+            let selectedCategory = null;
+
+            availableCategories.forEach(({ categories }) => {
                 categories.forEach(siteObj => {
-                    siteObj.categoryName === detectedCategoryName &&
-                        (selectedCategoryName = siteObj);
-                    siteObj.categoryName !== detectedCategoryName &&
-                        siteObj.subcategories.forEach(siteObj => {
-                            siteObj.categoryName === detectedCategoryName &&
-                                (selectedCategoryName = siteObj);
-                            siteObj.categoryName !== detectedCategoryName &&
-                                siteObj.subcategories.forEach(siteObj => {
-                                    siteObj.categoryName === detectedCategoryName &&
-                                        (selectedCategoryName = siteObj);
-                                });
-                        });
-                });
-        });
+                    if (siteObj.categoryName === detectedCategoryName) {
+                        selectedCategory = siteObj;
+                    } else {
+                        siteObj.subcategories &&
+                            siteObj.subcategories.forEach(siteObj => {
+                                siteObj.categoryName === detectedCategoryName &&
+                                    (selectedCategory = siteObj);
 
-        setUserSelectCategory(selectedCategoryName);
-        // console.log('[selectedCategoryName]', selectedCategoryName);
+                                siteObj.categoryName !== detectedCategoryName &&
+                                    siteObj.subcategories &&
+                                    siteObj.subcategories.forEach(siteObj => {
+                                        siteObj.categoryName === detectedCategoryName &&
+                                            (selectedCategory = siteObj);
+
+                                        siteObj.categoryName !== detectedCategoryName &&
+                                            siteObj.subcategories &&
+                                            siteObj.subcategories.forEach(siteObj => {
+                                                siteObj.categoryName === detectedCategoryName &&
+                                                    (selectedCategory = siteObj);
+                                            });
+                                    });
+                            });
+                    }
+                });
+            });
+
+            return setUserSelectCategory(selectedCategory);
+        };
+
+        selectedSite === 'Epicentrk.ua' &&
+            (selectedCategoryObj = getSelectedCategory(epicetrkUaCategories));
     };
 
     return (
@@ -50,7 +65,7 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory, language }) => 
                 {language === 'EN' && 'Available categories'}
                 {language === 'UA' && 'Доступні категорії'}
                 {language === 'RU' && 'Доступные категории'}
-                </p>
+            </p>
 
             <ul className="sidebar__categories-list">
                 {filteredCategories

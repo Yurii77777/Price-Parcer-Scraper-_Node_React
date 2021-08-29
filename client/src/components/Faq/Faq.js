@@ -65,7 +65,7 @@ export const Faq = ({
             alt_for_icon: 'Info info',
             message_en: 'You have selected "category" for scraping',
             message_ua: 'Ви вибрали "category" для парсингу',
-            message_ru: 'Вы выбрали selected "category" для парсинга'
+            message_ru: 'Вы выбрали "category" для парсинга'
         }
     ];
 
@@ -173,15 +173,15 @@ export const Faq = ({
                                   if (idMessage === 2) {
                                       let messageEn = message_en.replace(
                                           /"site"/g,
-                                          selectedSite.altLogo
+                                          selectedSite?.altLogo
                                       );
                                       let messageUa = message_ua.replace(
                                           /"site"/g,
-                                          selectedSite.altLogo
+                                          selectedSite?.altLogo
                                       );
                                       let messageRu = message_ru.replace(
                                           /"site"/g,
-                                          selectedSite.altLogo
+                                          selectedSite?.altLogo
                                       );
 
                                       return (

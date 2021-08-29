@@ -55,7 +55,7 @@
     }
 
     &__categories-top-item:hover .sidebar__subcategories-list > li {
-        background-color: rgba(32, 32, 102, 0.3);
+        background-color: #7e7ba0;
     }
 
     &__categories-top-item:hover .sidebar__subcategories-list > li:first-child {
@@ -95,7 +95,7 @@
     &__subcategories-item:hover .sidebar__sub-subcategories-list > li {
         font-size: 1.2rem;
         padding: 3px;
-        background-color: rgba(76, 76, 102, 0.8);
+        background-color: #7e7ba0;
     }
 
     &__subcategories-item:hover .sidebar__sub-subcategories-list > li:hover {
@@ -126,7 +126,7 @@
     &__sub-subcategories-list > li:hover .sidebar__sub-sub-subcategories-list > li {
         font-size: 1.2rem;
         padding: 3px;
-        background-color: rgba(76, 76, 102, 0.8);
+        background-color: #7e7ba0;
     }
 
     &__sub-subcategories-list > li:hover .sidebar__sub-sub-subcategories-list > li:hover {
