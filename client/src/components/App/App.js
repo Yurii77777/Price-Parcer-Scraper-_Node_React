@@ -23,7 +23,7 @@ export const App = () => {
                     setUserSelectCategory={setUserSelectCategory}
                     language={language}
                 />
-                <HomePage data={data} isLoading={isLoading} language={language} />
+                <HomePage data={data} setData={setData} isLoading={isLoading} language={language} />
             </main>
 
             <Faq
