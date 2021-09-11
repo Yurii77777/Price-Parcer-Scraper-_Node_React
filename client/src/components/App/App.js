@@ -15,7 +15,11 @@ export const App = () => {
 
     return (
         <div className="wrapper">
-            <Header setUserSelectSite={setUserSelectSite} setLanguage={setLanguage} language={language} />
+            <Header
+                setUserSelectSite={setUserSelectSite}
+                setLanguage={setLanguage}
+                language={language}
+            />
 
             <main className="content-container">
                 <Sidebar
@@ -23,7 +27,13 @@ export const App = () => {
                     setUserSelectCategory={setUserSelectCategory}
                     language={language}
                 />
-                <HomePage data={data} setData={setData} isLoading={isLoading} language={language} />
+                <HomePage
+                    data={data}
+                    setData={setData}
+                    isLoading={isLoading}
+                    language={language}
+                    userSelectCategory={userSelectCategory}
+                />
             </main>
 
             <Faq

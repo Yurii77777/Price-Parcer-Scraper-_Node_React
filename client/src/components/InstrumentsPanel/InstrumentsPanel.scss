@@ -1,0 +1,11 @@
+.instruments-panel {
+    margin-bottom: 5px;
+
+    &__logo {
+        width: 40px;
+    }
+
+    &__logo:hover {
+        cursor: pointer;
+    }
+}

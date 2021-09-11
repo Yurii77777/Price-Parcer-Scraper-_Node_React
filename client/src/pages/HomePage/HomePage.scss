@@ -1,15 +1,18 @@
 .goods-list {
-    width: 100%;
+    flex: 1;
+    min-width: 700px;
+    max-width: 100%;
     padding: 10px !important;
 
     &__top-item {
         display: grid;
-        grid-template-columns: 5% 10% 40% 10% 15% 15% 5%;
+        grid-template-columns: 11% 7% 36% 9% 16% 16% 5%;
         justify-items: center;
         align-items: center;
         font-size: 1.5rem;
         font-weight: 600;
         padding: 5px 0;
+        margin-top: 5px;
         border-top: 1px dashed #4c4c66;
         border-bottom: 1px dashed #4c4c66;
     }
@@ -20,10 +23,17 @@
 
     &__item {
         display: grid;
-        grid-template-columns: 5% 10% 40% 10% 15% 15% 5%;
+        grid-template-columns: 11% 7% 36% 9% 16% 16% 5%;
         font-size: 1.3rem;
         padding: 5px 0;
         border-bottom: 1px solid rgba(76, 76, 102, 0.2);
+    }
+
+    &__item-image {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     &__item-no-image,

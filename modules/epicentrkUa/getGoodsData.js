@@ -89,6 +89,23 @@ const getGoodsData = async (browser, catogoryUrl) => {
                                 text.textContent.replace(/(\r\n\t|\n|\r|\t|[ \t])/gm, '')
                             );
                         }
+
+                        let isThirdPriceSelector = false;
+                        let thirdPriceSelector = '';
+
+                        try {
+                            thirdPriceSelector = await newPage.$eval(
+                                '.p-block__status.is-red',
+                                text => text.textContent
+                            );
+                            isThirdPriceSelector = true;
+                        } catch (error) {
+                            isThirdPriceSelector = false;
+                        }
+
+                        if (isThirdPriceSelector) {
+                            dataObj['goodPrice'] = 0;
+                        }
                         // Finding Price selector End
 
                         try {
@@ -226,6 +243,7 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         }
                         //Finding Image selector End
 
+                        //Finding Brand selector Begin
                         let isFirstBrandSelector = false;
                         let firstBrandSelector = '';
 
@@ -245,6 +263,7 @@ const getGoodsData = async (browser, catogoryUrl) => {
                                 img => img.alt
                             );
                         }
+                        //Finding Brand selector End
 
                         await newPage.close();
                         resolve(dataObj);

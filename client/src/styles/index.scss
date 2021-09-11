@@ -89,8 +89,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 80%;
-    // height: 100vh;
+    min-width: 970px;
+    max-width: 90%;
     margin: 0 auto;
     background: radial-gradient(
         28.91% 81.86% at 6.93% 9.5%,

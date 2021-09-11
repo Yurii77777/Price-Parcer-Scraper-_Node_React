@@ -1,21 +1,16 @@
 import { Loader } from '../../components/Loader/Loader';
+import { InstrumentsPanel } from '../../components/InstrumentsPanel/InstrumentsPanel';
 
 import './HomePage.scss';
 import noImage from '../../resources/images/no-image-icon.png';
 
-export const HomePage = ({ data, setData, isLoading, language }) => {
-    //TODO: Sort by price Low and High
-    const handleSortByPrice = data => {
-        const sortedGoodsByPrice = [...data].sort((goodObj1, goodObj2) =>
-            goodObj1.goodPrice > goodObj2.goodPrice ? 1 : -1
-        );
-
-        return setData(sortedGoodsByPrice);
-    };
+export const HomePage = ({ data, setData, isLoading, language, userSelectCategory }) => {
 
     return (
+        
         <ul className="goods-list">
             {isLoading && <Loader />}
+            {data && <InstrumentsPanel data={data} userSelectCategory={userSelectCategory} />}
             {data && (
                 <li className="goods-list__top-item" key={1.11}>
                     <p className="goods-list__top-item-image">
@@ -36,7 +31,9 @@ export const HomePage = ({ data, setData, isLoading, language }) => {
                         {language === 'UA' && 'Назва'}
                         {language === 'RU' && 'Наименование'}
                     </p>
-                    <p className="goods-list__top-item-price" onClick={() => handleSortByPrice(data)}>
+                    <p
+                        className="goods-list__top-item-price"
+                    >
                         {!language && 'Price, UAH'}
                         {language === 'EN' && 'Price, UAH'}
                         {language === 'UA' && 'Ціна, UAH'}
