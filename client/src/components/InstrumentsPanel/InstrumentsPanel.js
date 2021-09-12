@@ -1,11 +1,9 @@
 import './InstrumentsPanel.scss';
 
 import iconXML from '../../resources/images/instruments-icons/xml-icon.png';
-import { type } from 'os';
+import iconCSV from '../../resources/images/instruments-icons/csv-icon.png';
 
 export const InstrumentsPanel = ({ data, userSelectCategory }) => {
-    const fs = require('fs');
-
     const { categoryName } = userSelectCategory;
 
     const instruments = [
@@ -13,11 +11,15 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
             id: 1,
             imgSrc: `${iconXML}`,
             imgTitle: 'Create XML file'
+        },
+        {
+            id: 2,
+            imgSrc: `${iconCSV}`,
+            imgTitle: 'Create CSV file'
         }
     ];
 
     const downloadXmlFile = (xmlString, categoryName) => {
-        //TODO: Write XML file from Browser in selected folder by user
         const xmlFile = new Blob([xmlString], { type: 'application/xml' });
 
         if (window.navigator.msSaveOrOpenBlob) {
@@ -78,6 +80,57 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
         downloadXmlFile(xmlString, categoryName);
     };
 
+    const downloadCsvFile = (csvString, categoryName) => {
+        let textEncoder = new TextEncoder('utf-8');
+        let csvContentEncoded = textEncoder.encode([csvString]);
+        const csvFile = new Blob([csvContentEncoded], { type: 'text/csv;charset=utf-8' });
+
+        if (window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(csvFile, categoryName);
+        } else {
+            let a = document.createElement('a');
+            let url = URL.createObjectURL(csvFile);
+            a.href = url;
+            a.setAttribute("download", `${categoryName}.csv`);
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function () {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+    };
+
+    const createCsvFile = () => {
+        const records = [];
+        records.push(['CODE', 'TITLE', 'PRICE', 'SELLER', 'STATUS', 'URL', 'IMG-URL']);
+        
+        data.forEach(
+            ({ goodId, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl }) => {
+                const goodArr = [];
+
+                goodArr.push(String(goodId));
+                goodArr.push(String(goodTitle));
+                goodArr.push(String(goodPrice));
+                goodArr.push(String(goodSeller));
+                goodArr.push(String(goodStatus));
+                goodArr.push(String(goodUrl));
+                goodArr.push(String(goodImgUrl));
+
+                records.push(goodArr);
+            }
+        );
+
+        let csvString = '';
+
+        records.forEach(element => {
+            let row = element.join(",");
+            csvString += row + "\r\n";
+        });
+
+        downloadCsvFile(csvString, categoryName);
+    };
+
     return (
         <ul className="instruments-panel">
             {instruments.map(({ id, imgSrc, imgTitle }) => {
@@ -85,13 +138,13 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
                     <li
                         className="instruments-panel__element"
                         key={id}
+                        onClick={id === 1 ? createXmlFile : createCsvFile}
                     >
                         <img
                             className="instruments-panel__logo"
                             src={imgSrc}
                             title={imgTitle}
                             alt={imgTitle}
-                            onClick={id === 1 && createXmlFile}
                         />
                     </li>
                 );

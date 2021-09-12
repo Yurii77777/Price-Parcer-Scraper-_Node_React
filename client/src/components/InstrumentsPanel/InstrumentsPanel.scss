@@ -1,4 +1,6 @@
 .instruments-panel {
+    display: flex;
+    flex-direction: row;
     margin-bottom: 5px;
 
     &__logo {
