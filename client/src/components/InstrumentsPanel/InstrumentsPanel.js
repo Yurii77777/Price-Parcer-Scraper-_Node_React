@@ -81,30 +81,22 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
     };
 
     const downloadCsvFile = (csvString, categoryName) => {
-        let textEncoder = new TextEncoder('utf-8');
-        let csvContentEncoded = textEncoder.encode([csvString]);
-        const csvFile = new Blob([csvContentEncoded], { type: 'text/csv;charset=utf-8' });
+        let encodedUri = encodeURI(csvString);
+        let link = document.createElement('a');
+        link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodedUri);
+        link.setAttribute('download', `${categoryName}.csv`);
+        document.body.appendChild(link);
+        link.click();
 
-        if (window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(csvFile, categoryName);
-        } else {
-            let a = document.createElement('a');
-            let url = URL.createObjectURL(csvFile);
-            a.href = url;
-            a.setAttribute("download", `${categoryName}.csv`);
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(function () {
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-            }, 0);
-        }
+        setTimeout(function () {
+            document.body.removeChild(link);
+        }, 0);
     };
 
     const createCsvFile = () => {
         const records = [];
         records.push(['CODE', 'TITLE', 'PRICE', 'SELLER', 'STATUS', 'URL', 'IMG-URL']);
-        
+
         data.forEach(
             ({ goodId, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl }) => {
                 const goodArr = [];
@@ -121,12 +113,7 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
             }
         );
 
-        let csvString = '';
-
-        records.forEach(element => {
-            let row = element.join(",");
-            csvString += row + "\r\n";
-        });
+        let csvString = records.map(e => e.join(';')).join('\n');
 
         downloadCsvFile(csvString, categoryName);
     };
