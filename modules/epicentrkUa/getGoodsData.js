@@ -243,7 +243,9 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         }
                         //Finding Image selector End
 
-                        //Finding Brand selector Begin
+                        /**
+                         * Finding Brand selector Begin
+                         */
                         let isFirstBrandSelector = false;
                         let firstBrandSelector = '';
 
@@ -264,6 +266,30 @@ const getGoodsData = async (browser, catogoryUrl) => {
                             );
                         }
                         //Finding Brand selector End
+
+                        /**
+                         * Finding Description selector Begin
+                         */
+                        let isFirstDescriptionSelector = false;
+                        let firstDescriptionSelector = '';
+
+                        try {
+                            firstDescriptionSelector = await newPage.$eval(
+                                '.p-block__headline',
+                                text => text.textContent
+                            );
+                            isFirstDescriptionSelector = true;
+                        } catch (error) {
+                            isFirstDescriptionSelector = false;
+                        }
+
+                        if (isFirstDescriptionSelector) {
+                            dataObj['goodDescription'] = await newPage.$eval(
+                                '.p-slap .p-slap__content',
+                                text => text.textContent
+                            );
+                        }
+                        //Finding Description selector End
 
                         await newPage.close();
                         resolve(dataObj);

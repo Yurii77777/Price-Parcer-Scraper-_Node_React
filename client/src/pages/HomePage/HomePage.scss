@@ -1,12 +1,12 @@
 .goods-list {
     flex: 1;
-    min-width: 700px;
+    min-width: 807px;
     max-width: 100%;
     padding: 10px !important;
 
     &__top-item {
         display: grid;
-        grid-template-columns: 11% 7% 36% 9% 16% 16% 5%;
+        grid-template-columns: 10% 7% 34% 9% 15% 5% 15% 5%;
         justify-items: center;
         align-items: center;
         font-size: 1.5rem;
@@ -23,7 +23,7 @@
 
     &__item {
         display: grid;
-        grid-template-columns: 11% 7% 36% 9% 16% 16% 5%;
+        grid-template-columns: 10% 7% 34% 9% 15% 5% 15% 5%;
         font-size: 1.3rem;
         padding: 5px 0;
         border-bottom: 1px solid rgba(76, 76, 102, 0.2);
@@ -39,11 +39,6 @@
     &__item-no-image,
     &__item-good-image {
         width: 25px;
-    }
-
-    &__item-brand {
-        text-align: center;
-        align-self: center;
     }
 
     &__item-good-image:hover {
@@ -62,9 +57,37 @@
     }
 
     &__item-price,
+    &__item-brand,
     &__item-seller,
-    &__item-status {
+    &__item-status,
+    &__item-description {
         text-align: center;
+        align-self: center;
+    }
+
+    &__item-description {
+        padding: 10px 5px;
+        position: relative;
+    }
+
+    &__item-description:hover {
+        cursor: pointer;
+    }
+
+    &__item-description > span {
+        display: none;
+    }
+
+    &__item-description:hover > span {
+        display: block;
+        position: absolute;
+        font-size: 1.1rem;
+        line-height: 1.3;
+        padding: 5px;
+        width: 300px;
+        right: 10px;
+        border-radius: 5px;
+        background-color: #fff;
     }
 
     &__bottom-item {

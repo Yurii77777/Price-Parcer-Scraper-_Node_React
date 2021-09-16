@@ -29,7 +29,6 @@ export const App = () => {
                 />
                 <HomePage
                     data={data}
-                    setData={setData}
                     isLoading={isLoading}
                     language={language}
                     userSelectCategory={userSelectCategory}

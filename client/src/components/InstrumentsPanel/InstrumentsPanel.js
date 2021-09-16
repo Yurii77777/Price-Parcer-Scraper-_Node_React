@@ -10,12 +10,16 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
         {
             id: 1,
             imgSrc: `${iconXML}`,
-            imgTitle: 'Create XML file'
+            imgTitleEng: 'Create XML file',
+            imgTitleUa: 'Створити XML файл',
+            imgTitleRu: 'Создать XML файл'
         },
         {
             id: 2,
             imgSrc: `${iconCSV}`,
-            imgTitle: 'Create CSV file'
+            imgTitleEng: 'Create CSV file',
+            imgTitleUa: 'Створити CSV файл',
+            imgTitleRu: 'Создать CSV файл'
         }
     ];
 
@@ -44,7 +48,7 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
 
         for (let i = 0; i < data.length; i++) {
             let good = data[i];
-            let { goodId, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl } =
+            let { goodId, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl, goodDescription } =
                 good;
             // console.log('[good]', good);
 
@@ -70,6 +74,8 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
                 .ele('seller')
                 .txt(`${goodSeller}`)
                 .up()
+                .ele('description')
+                .txt(`${goodDescription.replace(/\s+/g, ' ')}`)
                 .ele('picture')
                 .txt(`${goodImgUrl}`);
         }
@@ -120,7 +126,7 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
 
     return (
         <ul className="instruments-panel">
-            {instruments.map(({ id, imgSrc, imgTitle }) => {
+            {instruments.map(({ id, imgSrc, imgTitleEng }) => {
                 return (
                     <li
                         className="instruments-panel__element"
@@ -130,8 +136,8 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
                         <img
                             className="instruments-panel__logo"
                             src={imgSrc}
-                            title={imgTitle}
-                            alt={imgTitle}
+                            title={imgTitleEng}
+                            alt={imgTitleEng}
                         />
                     </li>
                 );
