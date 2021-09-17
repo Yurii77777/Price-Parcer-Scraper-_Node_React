@@ -105,16 +105,17 @@ export const Faq = ({
 
     const getGoodsData = () => {
         const { catogoryUrl: url } = userSelectCategory;
+        const { altLogo: selectedSite } = userSelectSite;
         setIsLoading(true);
-        ws.send(JSON.stringify({ event: 'getGoodsRequest', categoryUrl: url }));
-        console.log('[isLoading]', isLoading);
+        ws.send(JSON.stringify({ event: 'getGoodsRequest', categoryUrl: url, selectedSite: selectedSite }));
+        // console.log('[userSelectSite]', userSelectSite);
 
         ws.onmessage = message => {
             const { data } = message;
             setData(JSON.parse(data));
             // console.log('[JSON.parse(data)]', JSON.parse(data));
             setIsLoading(false);
-            console.log('[isLoading]', isLoading);
+            // console.log('[isLoading]', isLoading);
         };
     };
 

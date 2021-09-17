@@ -59,6 +59,7 @@
     &__item-price,
     &__item-brand,
     &__item-code,
+    &__item-title,
     &__item-seller,
     &__item-status,
     &__item-description {
@@ -98,7 +99,6 @@
         font-weight: 600;
     }
 
-    &__bottom-item-title,
     &__bottom-item-quantity {
         text-align: center;
     }

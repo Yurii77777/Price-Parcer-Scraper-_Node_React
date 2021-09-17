@@ -1,19 +1,19 @@
 import logo from '../../resources/images/main-logo.png';
 import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
-// import rozetka_logo from '../../resources/images/sites-icons/rozetka.png';
+import rozetka_logo from '../../resources/images/sites-icons/rozetka.png';
 
 import './Header.scss';
 
 export const Header = ({ setUserSelectSite, setLanguage, language }) => {
     const availableSites = [
-        // {
-        //     idSite: 1,
-        //     inputId: 'rozetka_com_ua',
-        //     inputName: 'rozetka_com_ua',
-        //     srcLogo: rozetka_logo,
-        //     altLogo: 'rozetka.com.ua',
-        //     url: 'https://rozetka.com.ua/'
-        // },
+        {
+            idSite: 1,
+            inputId: 'rozetka_com_ua',
+            inputName: 'rozetka_com_ua',
+            srcLogo: rozetka_logo,
+            altLogo: 'Rozetka.com.ua',
+            url: 'https://rozetka.com.ua/'
+        },
         {
             idSite: 2,
             inputId: 'epicetrk_ua',

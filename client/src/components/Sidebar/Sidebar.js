@@ -1,4 +1,5 @@
 import { epicetrkUaCategories } from '../modules/epicetrkAvailableCategories';
+import { rozetkacomuaCategories } from '../modules/rozetkacomuaAvailableCategories';
 
 import './Sidebar.scss';
 
@@ -8,8 +9,14 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory, language }) => 
 
     let filteredCategories = null;
 
-    if (selectedSite) {
+    if (selectedSite && selectedSite === 'Epicentrk.ua') {
         filteredCategories = epicetrkUaCategories.filter(
+            ({ siteName }) => siteName === selectedSite
+        );
+    }
+
+    if (selectedSite && selectedSite === 'Rozetka.com.ua') {
+        filteredCategories = rozetkacomuaCategories.filter(
             ({ siteName }) => siteName === selectedSite
         );
     }
@@ -56,6 +63,8 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory, language }) => 
 
         selectedSite === 'Epicentrk.ua' &&
             (selectedCategoryObj = getSelectedCategory(epicetrkUaCategories));
+        selectedSite === 'Rozetka.com.ua' &&
+            (selectedCategoryObj = getSelectedCategory(rozetkacomuaCategories));
     };
 
     return (

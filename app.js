@@ -4,7 +4,8 @@ const config = require('config');
 const WebSocket = require('ws');
 const puppeteer = require('puppeteer');
 
-const goodsGetter = require('./modules/epicentrkUa/getGoodsData');
+const goodsGetterFromEpicentrkua = require('./modules/epicentrkUa/getGoodsData');
+const goodsGetterFromRozetkaComUa = require('./modules/rozetkaComUa/getGoodsData');
 
 const app = express();
 
@@ -27,7 +28,7 @@ start();
 server.on('connection', ws => {
     ws.on('message', message => {
         const request = JSON.parse(message);
-        const { event, categoryUrl } = request;
+        const { event, categoryUrl, selectedSite } = request;
 
         if (event === 'getGoodsRequest') {
             let browser;
@@ -38,7 +39,7 @@ server.on('connection', ws => {
                 try {
                     console.log('Opening the browser......');
                     browserInstance = await puppeteer.launch({
-                        headless: true,
+                        headless: false,
                         args: ['--disable-setuid-sandbox'],
                         ignoreHTTPSErrors: true
                     });
@@ -49,9 +50,14 @@ server.on('connection', ws => {
                 return browserInstance;
             };
 
-            const getGoods = async (browser, categoryUrl) => {
+            const getGoods = async (browser, categoryUrl, selectedSite) => {
                 browser = await startBrowser();
-                const data = await goodsGetter.getGoodsData(browser, categoryUrl);
+                let data = null;
+
+                selectedSite === 'Epicentrk.ua' &&
+                    (data = await goodsGetterFromEpicentrkua.getGoodsData(browser, categoryUrl));
+                selectedSite === 'Rozetka.com.ua' &&
+                    (data = await goodsGetterFromRozetkaComUa.getGoodsData(browser, categoryUrl));
                 // console.log('[data]', data);
 
                 server.clients.forEach(client => {
@@ -61,9 +67,9 @@ server.on('connection', ws => {
                 });
 
                 await browser.close();
-            }
+            };
 
-            getGoods(browser, categoryUrl);
+            getGoods(browser, categoryUrl, selectedSite);
         }
     });
 });
