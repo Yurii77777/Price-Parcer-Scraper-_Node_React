@@ -291,6 +291,30 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         }
                         //Finding Description selector End
 
+                        /**
+                         * Finding good's Code selector Begin
+                         */
+                        let isFirstCodeSelector = false;
+                        let firstCodeSelector = '';
+
+                        try {
+                            firstCodeSelector = await newPage.$eval(
+                                '.p-block__code',
+                                text => text.textContent
+                            );
+                            isFirstCodeSelector = true;
+                        } catch (error) {
+                            isFirstCodeSelector = false;
+                        }
+
+                        if (isFirstCodeSelector) {
+                            dataObj['goodCode'] = await newPage.$eval(
+                                '.p-block__code',
+                                text => text.textContent.replace(/\D/g, '')
+                            );
+                        }
+                        //Finding good's Code selector End
+
                         await newPage.close();
                         resolve(dataObj);
                     });

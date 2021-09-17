@@ -6,7 +6,7 @@
 
     &__top-item {
         display: grid;
-        grid-template-columns: 10% 7% 34% 9% 15% 5% 15% 5%;
+        grid-template-columns: 8% 7% 10% 30% 9% 13% 5% 13% 5%;
         justify-items: center;
         align-items: center;
         font-size: 1.5rem;
@@ -23,7 +23,7 @@
 
     &__item {
         display: grid;
-        grid-template-columns: 10% 7% 34% 9% 15% 5% 15% 5%;
+        grid-template-columns: 8% 7% 10% 30% 9% 13% 5% 13% 5%;
         font-size: 1.3rem;
         padding: 5px 0;
         border-bottom: 1px solid rgba(76, 76, 102, 0.2);
@@ -58,6 +58,7 @@
 
     &__item-price,
     &__item-brand,
+    &__item-code,
     &__item-seller,
     &__item-status,
     &__item-description {

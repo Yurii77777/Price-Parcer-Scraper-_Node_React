@@ -48,12 +48,12 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
 
         for (let i = 0; i < data.length; i++) {
             let good = data[i];
-            let { goodId, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl, goodDescription } =
+            let { goodCode, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl, goodDescription } =
                 good;
             // console.log('[good]', good);
 
             xml.ele('offer', {
-                id: `${goodId}`,
+                id: `${goodCode}`,
                 available: `${goodStatus === 'В наличии ' ? 'true' : 'false'}`
             })
                 .ele('url')
@@ -104,10 +104,10 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
         records.push(['CODE', 'TITLE', 'PRICE', 'SELLER', 'STATUS', 'URL', 'IMG-URL']);
 
         data.forEach(
-            ({ goodId, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl }) => {
+            ({ goodCode, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl }) => {
                 const goodArr = [];
 
-                goodArr.push(String(goodId));
+                goodArr.push(String(goodCode));
                 goodArr.push(String(goodTitle));
                 goodArr.push(String(goodPrice));
                 goodArr.push(String(goodSeller));

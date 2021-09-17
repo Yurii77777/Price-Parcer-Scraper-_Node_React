@@ -23,6 +23,11 @@ export const HomePage = ({ data, isLoading, language, userSelectCategory }) => {
                         {language === 'UA' && 'Бренд'}
                         {language === 'RU' && 'Бренд'}
                     </p>
+                    <p className="goods-list__top-item-code">
+                        {(!language || language === 'EN') && 'Code'}
+                        {language === 'UA' && 'Код'}
+                        {language === 'RU' && 'Код'}
+                    </p>
                     <p className="goods-list__top-item-title">
                         {(!language || language === 'EN') && 'Title'}
                         {language === 'UA' && 'Назва'}
@@ -59,6 +64,7 @@ export const HomePage = ({ data, isLoading, language, userSelectCategory }) => {
                     ({
                         goodId,
                         goodBrand,
+                        goodCode,
                         goodTitle,
                         goodPrice,
                         goodSeller,
@@ -85,6 +91,7 @@ export const HomePage = ({ data, isLoading, language, userSelectCategory }) => {
                                     )}
                                 </p>
                                 <p className="goods-list__item-brand">{goodBrand}</p>
+                                <p className="goods-list__item-code">{goodCode}</p>
                                 <p className="goods-list__item-title">{goodTitle}</p>
                                 <p className="goods-list__item-price">
                                     {Number(goodPrice).toFixed(2)}
