@@ -348,7 +348,7 @@ const getGoodsData = async (browser, catogoryUrl) => {
             }
 
             if (isNextButton) {
-                // await page.close();
+                await page.close();
                 let newPage = await browser.newPage();
                 await newPage.goto(nextButtonUrl);
                 return scrapeCurrentPage(newPage);

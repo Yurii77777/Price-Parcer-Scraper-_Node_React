@@ -26,18 +26,25 @@ const getGoodsData = async (browser, catogoryUrl) => {
             }
 
             if (isGoodsExist) {
-                let urls = await page.$$eval('ul.catalog-grid .catalog-grid__cell .ng-star-inserted .goods-tile', links => {
-                    links = links.map(link => link.querySelector('.goods-tile__inner > a.goods-tile__heading').href);
-                    links = links.filter((link, index) => links.indexOf(link) === index);
-                    return links;
-                });
+                let urls = await page.$$eval(
+                    'ul.catalog-grid .catalog-grid__cell .ng-star-inserted .goods-tile',
+                    links => {
+                        links = links.map(
+                            link =>
+                                link.querySelector('.goods-tile__inner > a.goods-tile__heading')
+                                    .href
+                        );
+                        links = links.filter((link, index) => links.indexOf(link) === index);
+                        return links;
+                    }
+                );
                 // console.log(urls);
 
                 let pagePromise = (link, index) =>
                     new Promise(async (resolve, reject) => {
                         let dataObj = {};
                         let newPage = await browser.newPage();
-                        await newPage.goto(link);
+                        await newPage.goto(link, {timeout: 60000});
 
                         dataObj['goodId'] = index;
                         dataObj['goodUrl'] = link;
@@ -68,8 +75,9 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         }
 
                         if (isFirstPriceSelector) {
-                            dataObj['goodPrice'] = await newPage.$eval('.product-prices__big', text =>
-                                text.textContent.replace(/(\D)/gm, '')
+                            dataObj['goodPrice'] = await newPage.$eval(
+                                '.product-prices__big',
+                                text => text.textContent.replace(/(\D)/gm, '')
                             );
                         }
                         // Finding Price selector End
@@ -79,8 +87,14 @@ const getGoodsData = async (browser, catogoryUrl) => {
                                 text.textContent.trim()
                             );
 
-                            goodStatus === 'Есть в наличии' && (dataObj['goodStatus'] = 'В наличии ');
-                            goodStatus === 'Заканчивается' && (dataObj['goodStatus'] = 'В наличии ');
+                            goodStatus === 'Есть в наличии' &&
+                                (dataObj['goodStatus'] = 'В наличии ');
+                            goodStatus === 'Заканчивается' &&
+                                (dataObj['goodStatus'] = 'В наличии ');
+                            goodStatus === 'Нет в наличии' &&
+                                (dataObj['goodStatus'] = 'Нет в наличии');
+                            goodStatus === 'Товар закончился' &&
+                                (dataObj['goodStatus'] = 'Нет в наличии');
                         } catch (error) {
                             dataObj['goodStatus'] = 'Not defined';
                         }
@@ -136,7 +150,10 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         let firstImgSelector = '';
 
                         try {
-                            firstImgSelector = await newPage.$eval('.picture-container__picture', img => img.src);
+                            firstImgSelector = await newPage.$eval(
+                                '.picture-container__picture',
+                                img => img.src
+                            );
                             isFirstImgSelector = true;
                         } catch (error) {
                             isFirstImgSelector = false;
@@ -215,8 +232,9 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         }
 
                         if (isFirstCodeSelector) {
-                            dataObj['goodCode'] = await newPage.$eval('.product__rating > .product__code', text =>
-                                text.textContent.replace(/\D/g, '')
+                            dataObj['goodCode'] = await newPage.$eval(
+                                '.product__rating > .product__code',
+                                text => text.textContent.replace(/\D/g, '')
                             );
                         }
                         //Finding good's Code selector End
@@ -232,7 +250,7 @@ const getGoodsData = async (browser, catogoryUrl) => {
                     scrapedData.push(currentPageData);
                 }
 
-                await page.close();
+                // await page.close();
             } else {
                 return {
                     message_en:
@@ -241,19 +259,20 @@ const getGoodsData = async (browser, catogoryUrl) => {
             }
 
             let isNextButton = false;
-            let nextButtonUrl = '';
+            let nextButtonUrl = null;
 
             try {
                 nextButtonUrl = await page.$eval(
-                    '.button.button_color_gray.button_size_medium.pagination__direction.pagination__direction_type_forward.ng-star-inserted',
+                    'a.pagination__direction_type_forward',
                     a => a.href
-                );
-                isNextButton = true;
+                    );
+                    isNextButton = true;
             } catch (error) {
                 isNextButton = false;
             }
 
-            if (isNextButton) {
+            if (isNextButton && nextButtonUrl !== '') {
+                await page.close();
                 let newPage = await browser.newPage();
                 await newPage.goto(nextButtonUrl);
                 return scrapeCurrentPage(newPage);
