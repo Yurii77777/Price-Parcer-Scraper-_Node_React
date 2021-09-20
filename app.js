@@ -4,8 +4,9 @@ const config = require('config');
 const WebSocket = require('ws');
 const puppeteer = require('puppeteer');
 
-const goodsGetterFromEpicentrkua = require('./modules/epicentrkUa/getGoodsData');
 const goodsGetterFromRozetkaComUa = require('./modules/rozetkaComUa/getGoodsData');
+const goodsGetterFromEpicentrkua = require('./modules/epicentrkUa/getGoodsData');
+const goodsGetterFromAlloUa = require('./modules/alloUa/getGoodsData');
 
 const app = express();
 
@@ -40,7 +41,7 @@ server.on('connection', ws => {
                     console.log('Opening the browser......');
                     browserInstance = await puppeteer.launch({
                         timeout: 60000,
-                        headless: true,
+                        headless: false,
                         args: ['--disable-setuid-sandbox'],
                         ignoreHTTPSErrors: true
                     });
@@ -59,6 +60,8 @@ server.on('connection', ws => {
                     (data = await goodsGetterFromEpicentrkua.getGoodsData(browser, categoryUrl));
                 selectedSite === 'Rozetka.com.ua' &&
                     (data = await goodsGetterFromRozetkaComUa.getGoodsData(browser, categoryUrl));
+                selectedSite === 'Allo.ua' &&
+                    (data = await goodsGetterFromAlloUa.getGoodsData(browser, categoryUrl));
                 // console.log('[data]', data);
 
                 server.clients.forEach(client => {

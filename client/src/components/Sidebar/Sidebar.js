@@ -1,5 +1,6 @@
-import { epicetrkUaCategories } from '../modules/epicetrkAvailableCategories';
 import { rozetkacomuaCategories } from '../modules/rozetkacomuaAvailableCategories';
+import { epicetrkUaCategories } from '../modules/epicetrkAvailableCategories';
+import { alloCategories } from '../modules/alloAvailableCategories';
 
 import './Sidebar.scss';
 
@@ -17,6 +18,12 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory, language }) => 
 
     if (selectedSite && selectedSite === 'Rozetka.com.ua') {
         filteredCategories = rozetkacomuaCategories.filter(
+            ({ siteName }) => siteName === selectedSite
+        );
+    }
+
+    if (selectedSite && selectedSite === 'Allo.ua') {
+        filteredCategories = alloCategories.filter(
             ({ siteName }) => siteName === selectedSite
         );
     }
@@ -65,6 +72,8 @@ export const Sidebar = ({ userSelectSite, setUserSelectCategory, language }) => 
             (selectedCategoryObj = getSelectedCategory(epicetrkUaCategories));
         selectedSite === 'Rozetka.com.ua' &&
             (selectedCategoryObj = getSelectedCategory(rozetkacomuaCategories));
+        selectedSite === 'Allo.ua' &&
+            (selectedCategoryObj = getSelectedCategory(alloCategories));
     };
 
     return (

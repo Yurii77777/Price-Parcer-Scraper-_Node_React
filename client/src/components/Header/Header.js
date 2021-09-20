@@ -1,6 +1,7 @@
 import logo from '../../resources/images/main-logo.png';
-import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
 import rozetka_logo from '../../resources/images/sites-icons/rozetka.png';
+import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
+import allo_logo from '../../resources/images/sites-icons/allo.png';
 
 import './Header.scss';
 
@@ -21,6 +22,14 @@ export const Header = ({ setUserSelectSite, setLanguage, language }) => {
             srcLogo: epicentr_logo,
             altLogo: 'Epicentrk.ua',
             url: 'https://epicentrk.ua/'
+        },
+        {
+            idSite: 3,
+            inputId: 'allo_ua',
+            inputName: 'allo_ua',
+            srcLogo: allo_logo,
+            altLogo: 'Allo.ua',
+            url: 'https://allo.ua/'
         }
     ];
 
