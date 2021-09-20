@@ -1,4 +1,4 @@
-const getGoodsData = async (browser, catogoryUrl) => {
+const getGoodsData = async (browser, categoryName, catogoryUrl) => {
     let data = null;
 
     try {
@@ -177,8 +177,8 @@ const getGoodsData = async (browser, catogoryUrl) => {
 
                         try {
                             firstBrandSelector = await newPage.$eval(
-                                '.p-char .p-char__item .p-char__brand .p-char__brand-logo',
-                                img => img.alt
+                                '.breadcrumbs .breadcrumbs__item > a',
+                                a => a.textContent
                             );
                             isFirstBrandSelector = true;
                         } catch (error) {
@@ -186,10 +186,11 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         }
 
                         if (isFirstBrandSelector) {
-                            dataObj['goodBrand'] = await newPage.$eval(
-                                '.p-char .p-char__item .p-char__brand .p-char__brand-logo',
-                                img => img.alt
-                            );
+                            let navElements = await newPage.$$eval('.breadcrumbs__link', el => el.map(el => {
+                                return el.textContent;
+                            }));
+
+                            dataObj['goodBrand'] = navElements[navElements.length - 2].replace(`${categoryName} `, '');
                         }
                         //Finding Brand selector End
 

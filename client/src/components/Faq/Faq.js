@@ -12,6 +12,7 @@ import './Faq.scss';
 export const Faq = ({
     userSelectSite,
     userSelectCategory,
+    data,
     setData,
     setIsLoading,
     isLoading,
@@ -61,11 +62,19 @@ export const Faq = ({
         },
         {
             idMessage: 5,
-            icon: info_icon,
+            icon: faq_icon,
             alt_for_icon: 'Info info',
             message_en: 'You have selected "category" for scraping',
             message_ua: 'Ви вибрали "category" для парсингу',
             message_ru: 'Вы выбрали "category" для парсинга'
+        },
+        {
+            idMessage: 6,
+            icon: info_icon,
+            alt_for_icon: 'FAQ info',
+            message_en: 'And now you can download data to XML or CSV file. You can also start a new scraping',
+            message_ua: 'Наразі у Вас є змога завантажити дані в XML або ж CSV файл. Або розпочати новий парсинг',
+            message_ru: 'Сейчас у Вас есть возможность скачать данные в XML или CSV файл. Или начать новый парсинг'
         }
     ];
 
@@ -105,9 +114,17 @@ export const Faq = ({
 
     const getGoodsData = () => {
         const { catogoryUrl: url } = userSelectCategory;
+        const { categoryName } = userSelectCategory;
         const { altLogo: selectedSite } = userSelectSite;
         setIsLoading(true);
-        ws.send(JSON.stringify({ event: 'getGoodsRequest', categoryUrl: url, selectedSite: selectedSite }));
+        ws.send(
+            JSON.stringify({
+                event: 'getGoodsRequest',
+                categoryName: categoryName,
+                categoryUrl: url,
+                selectedSite: selectedSite
+            })
+        );
         // console.log('[userSelectSite]', userSelectSite);
 
         ws.onmessage = message => {
@@ -309,6 +326,36 @@ export const Faq = ({
                                   message_ru
                               }) => {
                                   if (idMessage === 3) {
+                                      return (
+                                          <li key={idMessage}>
+                                              <img
+                                                  src={icon}
+                                                  alt={alt_for_icon}
+                                                  className={cn('notifications__faq_logo')}
+                                              />
+                                              {!language && message_en}
+                                              {language === 'EN' && message_en}
+                                              {language === 'UA' && message_ua}
+                                              {language === 'RU' && message_ru}
+                                          </li>
+                                      );
+                                  }
+
+                                  return null;
+                              }
+                          )
+                        : null}
+                    {data && !isLoading
+                        ? notifications.map(
+                              ({
+                                  idMessage,
+                                  icon,
+                                  alt_for_icon,
+                                  message_en,
+                                  message_ua,
+                                  message_ru
+                              }) => {
+                                  if (idMessage === 6) {
                                       return (
                                           <li key={idMessage}>
                                               <img

@@ -29,7 +29,7 @@ start();
 server.on('connection', ws => {
     ws.on('message', message => {
         const request = JSON.parse(message);
-        const { event, categoryUrl, selectedSite } = request;
+        const { event, categoryName, categoryUrl, selectedSite } = request;
 
         if (event === 'getGoodsRequest') {
             let browser;
@@ -52,7 +52,7 @@ server.on('connection', ws => {
                 return browserInstance;
             };
 
-            const getGoods = async (browser, categoryUrl, selectedSite) => {
+            const getGoods = async (browser, categoryName, categoryUrl, selectedSite) => {
                 browser = await startBrowser();
                 let data = null;
 
@@ -61,7 +61,7 @@ server.on('connection', ws => {
                 selectedSite === 'Rozetka.com.ua' &&
                     (data = await goodsGetterFromRozetkaComUa.getGoodsData(browser, categoryUrl));
                 selectedSite === 'Allo.ua' &&
-                    (data = await goodsGetterFromAlloUa.getGoodsData(browser, categoryUrl));
+                    (data = await goodsGetterFromAlloUa.getGoodsData(browser, categoryName, categoryUrl));
                 // console.log('[data]', data);
 
                 server.clients.forEach(client => {
@@ -73,7 +73,7 @@ server.on('connection', ws => {
                 await browser.close();
             };
 
-            getGoods(browser, categoryUrl, selectedSite);
+            getGoods(browser, categoryName, categoryUrl, selectedSite);
         }
     });
 });

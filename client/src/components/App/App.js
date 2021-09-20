@@ -38,6 +38,7 @@ export const App = () => {
             <Faq
                 userSelectSite={userSelectSite}
                 userSelectCategory={userSelectCategory}
+                data={data}
                 setData={setData}
                 setIsLoading={setIsLoading}
                 isLoading={isLoading}
