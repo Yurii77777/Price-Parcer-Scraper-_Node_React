@@ -48,7 +48,7 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
 
         for (let i = 0; i < data.length; i++) {
             let good = data[i];
-            let { goodCode, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl, goodDescription } =
+            let { goodCode, goodImgUrl, goodPrice, goodBrand, goodSeller, goodStatus, goodTitle, goodUrl, goodDescription } =
                 good;
             // console.log('[good]', good);
 
@@ -67,6 +67,9 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
                 .up()
                 .ele('category')
                 .txt(`${categoryName}`)
+                .up()
+                .ele('vendor')
+                .txt(`${goodBrand}`)
                 .up()
                 .ele('name')
                 .txt(`${goodTitle}`)
@@ -101,13 +104,14 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
 
     const createCsvFile = () => {
         const records = [];
-        records.push(['CODE', 'TITLE', 'PRICE', 'SELLER', 'STATUS', 'URL', 'IMG-URL']);
+        records.push(['CODE', 'VENDOR', 'TITLE', 'PRICE', 'SELLER', 'STATUS', 'URL', 'IMG-URL']);
 
         data.forEach(
-            ({ goodCode, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl }) => {
+            ({ goodCode, goodBrand, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl }) => {
                 const goodArr = [];
 
                 goodArr.push(String(goodCode));
+                goodArr.push(String(goodBrand));
                 goodArr.push(String(goodTitle));
                 goodArr.push(String(goodPrice));
                 goodArr.push(String(goodSeller));

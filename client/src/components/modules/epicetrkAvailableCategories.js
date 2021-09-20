@@ -4560,7 +4560,8 @@ export const epicetrkUaCategories = [
                                     {
                                         categoryId: 1,
                                         categoryName: 'Видеодомофоны',
-                                        catogoryUrl: 'https://epicentrk.ua/shop/domofony/fs/tip-tovaru-videodomofon/',
+                                        // catogoryUrl: 'https://epicentrk.ua/shop/domofony/fs/tip-tovaru-videodomofon/',
+                                        catogoryUrl: 'https://epicentrk.ua/ua/shop/domofony/filter/seller-is-epicentrk/brand-is-dnoryw6k3fkd6crp/apply/',
                                         subcategories: [],
                                         brands: []
                                     },

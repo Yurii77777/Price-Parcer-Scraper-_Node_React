@@ -251,8 +251,8 @@ const getGoodsData = async (browser, catogoryUrl) => {
 
                         try {
                             firstBrandSelector = await newPage.$eval(
-                                '.p-char .p-char__item .p-char__brand .p-char__brand-logo',
-                                img => img.alt
+                                '.breadcrumbs__list li > a',
+                                a => a.href
                             );
                             isFirstBrandSelector = true;
                         } catch (error) {
@@ -260,10 +260,12 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         }
 
                         if (isFirstBrandSelector) {
-                            dataObj['goodBrand'] = await newPage.$eval(
-                                '.p-char .p-char__item .p-char__brand .p-char__brand-logo',
-                                img => img.alt
+                            let navElements = await newPage.$$eval('.breadcrumbs__text', el =>
+                                el.map(el => {
+                                    return el.textContent;
+                                })
                             );
+                            dataObj['goodBrand'] = navElements[navElements.length - 2];
                         }
                         //Finding Brand selector End
 

@@ -41,7 +41,7 @@ server.on('connection', ws => {
                     console.log('Opening the browser......');
                     browserInstance = await puppeteer.launch({
                         timeout: 60000,
-                        headless: false,
+                        headless: true,
                         args: ['--disable-setuid-sandbox'],
                         ignoreHTTPSErrors: true
                     });

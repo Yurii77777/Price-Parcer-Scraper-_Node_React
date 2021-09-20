@@ -147,8 +147,7 @@ export const rozetkacomuaCategories = [
                                     {
                                         categoryId: 1,
                                         categoryName: 'Видеодомофоны',
-                                        // catogoryUrl: 'https://rozetka.com.ua/video_intercoms/c259633/',
-                                        catogoryUrl: 'https://rozetka.com.ua/video_intercoms/c259633/seller=rozetka/',
+                                        catogoryUrl: 'https://rozetka.com.ua/video_intercoms/c259633/',
                                         subcategories: [],
                                         brands: []
                                     },
