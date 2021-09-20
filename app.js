@@ -59,7 +59,7 @@ server.on('connection', ws => {
                 selectedSite === 'Epicentrk.ua' &&
                     (data = await goodsGetterFromEpicentrkua.getGoodsData(browser, categoryUrl));
                 selectedSite === 'Rozetka.com.ua' &&
-                    (data = await goodsGetterFromRozetkaComUa.getGoodsData(browser, categoryUrl));
+                    (data = await goodsGetterFromRozetkaComUa.getGoodsData(browser, categoryName, categoryUrl));
                 selectedSite === 'Allo.ua' &&
                     (data = await goodsGetterFromAlloUa.getGoodsData(browser, categoryName, categoryUrl));
                 // console.log('[data]', data);

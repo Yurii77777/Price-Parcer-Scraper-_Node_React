@@ -1,4 +1,4 @@
-const getGoodsData = async (browser, catogoryUrl) => {
+const getGoodsData = async (browser, categoryName, catogoryUrl) => {
     let data = null;
 
     try {
@@ -10,7 +10,7 @@ const getGoodsData = async (browser, catogoryUrl) => {
         const scrapedData = [];
 
         const scrapeCurrentPage = async page => {
-            await page.waitForSelector('.content_type_catalog');
+            await page.waitForSelector('.central-wrapper');
 
             let isGoodsExist = false;
             let goods = '';
@@ -44,7 +44,12 @@ const getGoodsData = async (browser, catogoryUrl) => {
                     new Promise(async (resolve, reject) => {
                         let dataObj = {};
                         let newPage = await browser.newPage();
-                        await newPage.goto(link, {timeout: 60000});
+                        await newPage.setViewport({
+                            width: 1280,
+                            height: 800,
+                            deviceScaleFactor: 1
+                        });
+                        await newPage.goto(link, { timeout: 90000 });
 
                         dataObj['goodId'] = index;
                         dataObj['goodUrl'] = link;
@@ -175,8 +180,8 @@ const getGoodsData = async (browser, catogoryUrl) => {
 
                         try {
                             firstBrandSelector = await newPage.$eval(
-                                '.p-char .p-char__item .p-char__brand .p-char__brand-logo',
-                                img => img.alt
+                                '.breadcrumbs li > a',
+                                a => a.href
                             );
                             isFirstBrandSelector = true;
                         } catch (error) {
@@ -184,9 +189,15 @@ const getGoodsData = async (browser, catogoryUrl) => {
                         }
 
                         if (isFirstBrandSelector) {
-                            dataObj['goodBrand'] = await newPage.$eval(
-                                '.p-char .p-char__item .p-char__brand .p-char__brand-logo',
-                                img => img.alt
+                            let navElements = await newPage.$$eval('.breadcrumbs__link', el =>
+                                el.map(el => {
+                                    return el.textContent;
+                                })
+                            );
+
+                            dataObj['goodBrand'] = navElements[navElements.length - 1].replace(
+                                `${categoryName} `,
+                                ''
                             );
                         }
                         //Finding Brand selector End
@@ -265,8 +276,8 @@ const getGoodsData = async (browser, catogoryUrl) => {
                 nextButtonUrl = await page.$eval(
                     'a.pagination__direction_type_forward',
                     a => a.href
-                    );
-                    isNextButton = true;
+                );
+                isNextButton = true;
             } catch (error) {
                 isNextButton = false;
             }

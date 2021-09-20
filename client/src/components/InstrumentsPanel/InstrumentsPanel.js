@@ -53,7 +53,7 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
             // console.log('[good]', good);
 
             xml.ele('offer', {
-                id: `${goodCode}`,
+                id: `${goodCode || 'Not defined'}`,
                 available: `${goodStatus === 'В наличии ' ? 'true' : 'false'}`
             })
                 .ele('url')
@@ -75,7 +75,7 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
                 .txt(`${goodSeller}`)
                 .up()
                 .ele('description')
-                .txt(`${goodDescription.replace(/\s+/g, ' ')}`)
+                .txt(`${goodDescription && goodDescription.replace(/\s+/g, ' ')}`)
                 .ele('picture')
                 .txt(`${goodImgUrl}`);
         }
