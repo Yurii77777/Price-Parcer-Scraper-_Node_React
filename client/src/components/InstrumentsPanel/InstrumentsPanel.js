@@ -79,6 +79,7 @@ export const InstrumentsPanel = ({ data, userSelectCategory }) => {
                 .up()
                 .ele('description')
                 .txt(`${goodDescription && goodDescription.replace(/\s+/g, ' ')}`)
+                .up()
                 .ele('picture')
                 .txt(`${goodImgUrl}`);
         }
