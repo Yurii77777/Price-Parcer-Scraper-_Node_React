@@ -8,7 +8,7 @@ import { Button } from '../UI-elements/Button/Button';
 import './Faq.scss';
 
 export const Faq = ({
-    userSelectSite,
+    userSelectSite = {},
     userSelectCategory,
     data,
     setData,
@@ -16,16 +16,11 @@ export const Faq = ({
     isLoading,
     language
 }) => {
-    let selectedSiteObj = userSelectSite;
+    let selectedSite = (Object.keys(userSelectSite).length > 0) && userSelectSite;
+    // console.log('[selectedSite]', selectedSite);
+
     const ws = new WebSocket('ws://localhost:5050');
     ws.onopen = () => console.log('Соединение установлено');
-
-    let appLog = {
-        appAtStart: false,
-        lastIdFaqMes: null,
-        checkedSite: null
-    };
-    // console.log('[appLog]', appLog);
 
     let isHiddenFaqWindow = false;
     const [visibleFaqWindow, setVisibleFaqWindow] = useState(isHiddenFaqWindow);
@@ -37,19 +32,6 @@ export const Faq = ({
     const handleVisibleFaqWindow = () => {
         visibleFaqWindow ? setVisibleFaqWindow(false) : setVisibleFaqWindow(true);
     };
-
-    const handleSelectedSite = (selectedSiteObj = {}) => {
-        if (Object.keys(selectedSiteObj).length > 0) {
-            appLog.appAtStart = false;
-            appLog.lastIdFaqMes = 2;
-            appLog.checkedSite = selectedSiteObj.url;
-
-            return selectedSiteObj;
-        }
-    };
-
-    let selectedSite = handleSelectedSite(selectedSiteObj);
-    // console.log('[selectedSite]', selectedSite);
 
     const getGoodsData = () => {
         const { catogoryUrl: url } = userSelectCategory;
@@ -87,7 +69,7 @@ export const Faq = ({
 
             <div className="notifications__content-wrapper">
                 <ul className="notifications__list">
-                    {!data 
+                    {!data && !selectedSite 
                         ? notifications.map(
                               ({
                                   idMessage,
