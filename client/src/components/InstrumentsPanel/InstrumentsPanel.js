@@ -1,149 +1,123 @@
+import { createCsvFile } from '../../utils/createCsvFile';
+import { createXmlFile } from '../../utils/createXmlFile';
+import { downloadCsvFile } from '../../utils/downloadCsvFile';
+import { downloadXmlFile } from '../../utils/downloadXmlFile';
+import { createCsvFileChemicalProm } from '../../modules/chemicalguys-ua/createCsvFilePromUa';
+import { createXmlFileChemicalProm } from '../../modules/chemicalguys-ua/createXmlFilePromUa';
+
 import './InstrumentsPanel.scss';
 
-import iconXML from '../../resources/images/instruments-icons/xml-icon.png';
-import iconCSV from '../../resources/images/instruments-icons/csv-icon.png';
+import iconXML from '../../resources/images/instruments-icons/xml-icon.svg';
+import iconCSV from '../../resources/images/instruments-icons/csv-icon.svg';
 
-export const InstrumentsPanel = ({ data, userSelectCategory }) => {
-    const { categoryName } = userSelectCategory;
-
+export const InstrumentsPanel = ({ data, propsForInstruments, language }) => {
     const instruments = [
         {
             id: 1,
             imgSrc: `${iconXML}`,
             imgTitleEng: 'Create XML file',
             imgTitleUa: 'Створити XML файл',
-            imgTitleRu: 'Создать XML файл'
+            imgTitleRu: 'Создать XML файл',
+            submenu: [
+                {
+                    id: 1.1,
+                    titleEng: 'XML short data',
+                    titleUa: 'XML компактний',
+                    titleRu: 'XML компактный'
+                },
+                {
+                    id: 1.2,
+                    titleEng: 'XML for prom.ua',
+                    titleUa: 'XML для prom.ua',
+                    titleRu: 'XML для prom.ua'
+                }
+            ]
         },
         {
             id: 2,
             imgSrc: `${iconCSV}`,
             imgTitleEng: 'Create CSV file',
             imgTitleUa: 'Створити CSV файл',
-            imgTitleRu: 'Создать CSV файл'
+            imgTitleRu: 'Создать CSV файл',
+            submenu: [
+                {
+                    id: 2.1,
+                    titleEng: 'CSV short data',
+                    titleUa: 'CSV компактний',
+                    titleRu: 'CSV компактный'
+                },
+                {
+                    id: 2.2,
+                    titleEng: 'CSV for prom.ua',
+                    titleUa: 'CSV для prom.ua',
+                    titleRu: 'CSV для prom.ua'
+                }
+            ]
         }
     ];
 
-    const downloadXmlFile = (xmlString, categoryName) => {
-        const xmlFile = new Blob([xmlString], { type: 'application/xml' });
+    const handleClickOnSubmenu = (id, propsForInstruments) => {
+        let { category } = propsForInstruments;
+        let { site } = propsForInstruments;
 
-        if (window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(xmlFile, categoryName);
-        } else {
-            let a = document.createElement('a');
-            let url = URL.createObjectURL(xmlFile);
-            a.href = url;
-            a.download = categoryName;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(function () {
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-            }, 0);
-        }
-    };
-
-    const createXmlFile = () => {
-        const builder = require('xmlbuilder');
-        let xml = builder.create('offers');
-
-        for (let i = 0; i < data.length; i++) {
-            let good = data[i];
-            let { goodCode, goodImgUrl, goodPrice, goodBrand, goodSeller, goodStatus, goodTitle, goodUrl, goodDescription } =
-                good;
-            // console.log('[good]', good);
-
-            xml.ele('offer', {
-                id: `${goodCode || 'Not defined'}`,
-                available: `${goodStatus === 'В наличии ' ? 'true' : 'false'}`
-            })
-                .ele('url')
-                .txt(`${goodUrl}`)
-                .up()
-                .ele('price')
-                .txt(`${goodPrice}`)
-                .up()
-                .ele('currencyId')
-                .txt('UAH')
-                .up()
-                .ele('category')
-                .txt(`${categoryName}`)
-                .up()
-                .ele('vendor')
-                .txt(`${goodBrand}`)
-                .up()
-                .ele('name')
-                .txt(`${goodTitle}`)
-                .up()
-                .ele('seller')
-                .txt(`${goodSeller}`)
-                .up()
-                .ele('description')
-                .txt(`${goodDescription && goodDescription.replace(/\s+/g, ' ')}`)
-                .up()
-                .ele('picture')
-                .txt(`${goodImgUrl}`);
+        if (id === 1.1) {
+            let xmlString = createXmlFile(data);
+            downloadXmlFile(xmlString, category);
         }
 
-        let xmlString = xml.toString({ pretty: true });
-        // console.log('[xmlString]', xmlString);
+        if (id === 1.2 && site === 'Chemicalguys.ua') {
+            let xmlString = createXmlFileChemicalProm(data, category);
+            downloadXmlFile(xmlString, category);
+        }
 
-        downloadXmlFile(xmlString, categoryName);
-    };
+        if (id === 2.1) {
+            let csvString = createCsvFile(data);
+            downloadCsvFile(csvString, category);
+        }
 
-    const downloadCsvFile = (csvString, categoryName) => {
-        let encodedUri = encodeURI(csvString);
-        let link = document.createElement('a');
-        link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodedUri);
-        link.setAttribute('download', `${categoryName}.csv`);
-        document.body.appendChild(link);
-        link.click();
-
-        setTimeout(function () {
-            document.body.removeChild(link);
-        }, 0);
-    };
-
-    const createCsvFile = () => {
-        const records = [];
-        records.push(['CODE', 'VENDOR', 'TITLE', 'PRICE', 'SELLER', 'STATUS', 'URL', 'IMG-URL']);
-
-        data.forEach(
-            ({ goodCode, goodBrand, goodImgUrl, goodPrice, goodSeller, goodStatus, goodTitle, goodUrl }) => {
-                const goodArr = [];
-
-                goodArr.push(String(goodCode));
-                goodArr.push(String(goodBrand));
-                goodArr.push(String(goodTitle));
-                goodArr.push(String(goodPrice));
-                goodArr.push(String(goodSeller));
-                goodArr.push(String(goodStatus));
-                goodArr.push(String(goodUrl));
-                goodArr.push(String(goodImgUrl));
-
-                records.push(goodArr);
-            }
-        );
-
-        let csvString = records.map(e => e.join(';')).join('\n');
-
-        downloadCsvFile(csvString, categoryName);
+        if (id === 2.2 && site === 'Chemicalguys.ua') {
+            let csvString = createCsvFileChemicalProm(data);
+            downloadCsvFile(csvString, category);
+        }
     };
 
     return (
         <ul className="instruments-panel">
-            {instruments.map(({ id, imgSrc, imgTitleEng }) => {
+            {instruments.map(({ id, imgSrc, imgTitleEng, imgTitleUa, imgTitleRu, submenu }) => {
                 return (
-                    <li
-                        className="instruments-panel__element"
-                        key={id}
-                        onClick={id === 1 ? createXmlFile : createCsvFile}
-                    >
+                    <li className="instruments-panel__element" key={id}>
                         <img
                             className="instruments-panel__logo"
                             src={imgSrc}
-                            title={imgTitleEng}
-                            alt={imgTitleEng}
+                            title={
+                                ((!language || language === 'EN') && imgTitleEng) ||
+                                (language === 'UA' && imgTitleUa) ||
+                                (language === 'RU' && imgTitleRu)
+                            }
+                            // eslint-disable-next-line
+                            alt={
+                                ((!language || language === 'EN') && imgTitleEng) ||
+                                (language === 'UA' && imgTitleUa) ||
+                                (language === 'RU' && imgTitleRu)
+                            }
                         />
+                        <ul className="instruments-panel__submenu">
+                            {submenu && submenu.length
+                                ? submenu.map(({ id, titleEng, titleUa, titleRu }) => {
+                                      return (
+                                          <li
+                                              className="instruments-panel__submenu-item"
+                                              key={id}
+                                              onClick={() => handleClickOnSubmenu(id, propsForInstruments)}
+                                          >
+                                              {((!language || language === 'EN') && titleEng) ||
+                                                  (language === 'UA' && titleUa) ||
+                                                  (language === 'RU' && titleRu)}
+                                          </li>
+                                      );
+                                  })
+                                : null}
+                        </ul>
                     </li>
                 );
             })}

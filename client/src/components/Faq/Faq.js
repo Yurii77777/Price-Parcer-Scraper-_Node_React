@@ -9,7 +9,10 @@ import './Faq.scss';
 
 export const Faq = ({
     userSelectSite = {},
+    setUserSelectSite,
     userSelectCategory,
+    setUserSelectCategory,
+    setPropsForInstruments,
     data,
     setData,
     setIsLoading,
@@ -18,12 +21,11 @@ export const Faq = ({
 }) => {
     let selectedSite = (Object.keys(userSelectSite).length > 0) && userSelectSite;
     // console.log('[selectedSite]', selectedSite);
-
+    
     const ws = new WebSocket('ws://localhost:5050');
     ws.onopen = () => console.log('Соединение установлено');
 
-    let isHiddenFaqWindow = false;
-    const [visibleFaqWindow, setVisibleFaqWindow] = useState(isHiddenFaqWindow);
+    const [visibleFaqWindow, setVisibleFaqWindow] = useState();
 
     /**
      * Function changes state value on "true" or "false"
@@ -37,6 +39,10 @@ export const Faq = ({
         const { catogoryUrl: url } = userSelectCategory;
         const { categoryName } = userSelectCategory;
         const { altLogo: selectedSite } = userSelectSite;
+        setPropsForInstruments({site: selectedSite, category: categoryName})
+        setData([]);
+        setUserSelectSite({});
+        setUserSelectCategory({});
         setIsLoading(true);
         ws.send(
             JSON.stringify({

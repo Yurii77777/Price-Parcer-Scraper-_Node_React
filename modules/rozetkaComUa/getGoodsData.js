@@ -8,6 +8,7 @@ const getGoodsData = async (browser, categoryName, catogoryUrl) => {
         await page.goto(catogoryUrl);
 
         const scrapedData = [];
+        let id = 0;
 
         const scrapeCurrentPage = async page => {
             await page.waitForSelector('.central-wrapper');
@@ -40,7 +41,7 @@ const getGoodsData = async (browser, categoryName, catogoryUrl) => {
                 );
                 // console.log(urls);
 
-                let pagePromise = (link, index) =>
+                let pagePromise = (link, id) =>
                     new Promise(async (resolve, reject) => {
                         let dataObj = {};
                         let newPage = await browser.newPage();
@@ -51,7 +52,7 @@ const getGoodsData = async (browser, categoryName, catogoryUrl) => {
                         });
                         await newPage.goto(link, { timeout: 90000 });
 
-                        dataObj['goodId'] = index;
+                        dataObj['goodId'] = id;
                         dataObj['goodUrl'] = link;
 
                         try {
@@ -255,8 +256,8 @@ const getGoodsData = async (browser, categoryName, catogoryUrl) => {
                     });
 
                 for (let link in urls) {
-                    let index = link;
-                    let currentPageData = await pagePromise(urls[link], index);
+                    id += 1;
+                    let currentPageData = await pagePromise(urls[link], id);
                     // console.log('[currentPageData]', currentPageData);
                     scrapedData.push(currentPageData);
                 }

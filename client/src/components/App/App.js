@@ -12,6 +12,10 @@ export const App = () => {
     const [data, setData] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [language, setLanguage] = useState();
+    const [propsForInstruments, setPropsForInstruments] = useState({
+        site: null,
+        category: null
+    });
 
     return (
         <div className="wrapper">
@@ -31,13 +35,16 @@ export const App = () => {
                     data={data}
                     isLoading={isLoading}
                     language={language}
-                    userSelectCategory={userSelectCategory}
+                    propsForInstruments={propsForInstruments}
                 />
             </main>
 
             <Faq
                 userSelectSite={userSelectSite}
+                setUserSelectSite={setUserSelectSite}
                 userSelectCategory={userSelectCategory}
+                setUserSelectCategory={setUserSelectCategory}
+                setPropsForInstruments={setPropsForInstruments}
                 data={data}
                 setData={setData}
                 setIsLoading={setIsLoading}

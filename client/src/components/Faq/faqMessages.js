@@ -14,9 +14,9 @@ export const notifications = [
         idMessage: 2,
         icon: info_icon,
         alt_for_icon: 'Info info',
-        message_en: 'You have selected "site" for scraping',
-        message_ua: 'Ви вибрали "site" для парсингу',
-        message_ru: 'Вы выбрали "site" для парсинга'
+        message_en: 'You have selected >> "site" << for scraping',
+        message_ua: 'Ви вибрали >> "site" << для парсингу',
+        message_ru: 'Вы выбрали >> "site" << для парсинга'
     },
     {
         idMessage: 3,
@@ -40,11 +40,11 @@ export const notifications = [
     },
     {
         idMessage: 5,
-        icon: faq_icon,
+        icon: info_icon,
         alt_for_icon: 'Info info',
-        message_en: 'You have selected "category" for scraping',
-        message_ua: 'Ви вибрали "category" для парсингу',
-        message_ru: 'Вы выбрали "category" для парсинга'
+        message_en: 'You have selected >> "category" << for scraping',
+        message_ua: 'Ви вибрали >> "category" << для парсингу',
+        message_ru: 'Вы выбрали >> "category" << для парсинга'
     },
     {
         idMessage: 6,

@@ -7,6 +7,7 @@ const puppeteer = require('puppeteer');
 const goodsGetterFromRozetkaComUa = require('./modules/rozetkaComUa/getGoodsData');
 const goodsGetterFromEpicentrkua = require('./modules/epicentrkUa/getGoodsData');
 const goodsGetterFromAlloUa = require('./modules/alloUa/getGoodsData');
+const goodsGetterFromChemicalguysUa = require('./modules/chemicalguysUa/getChemicalguysData');
 
 const app = express();
 
@@ -41,7 +42,7 @@ server.on('connection', ws => {
                     console.log('Opening the browser......');
                     browserInstance = await puppeteer.launch({
                         timeout: 60000,
-                        headless: true,
+                        headless: false,
                         args: ['--disable-setuid-sandbox'],
                         ignoreHTTPSErrors: true
                     });
@@ -62,6 +63,8 @@ server.on('connection', ws => {
                     (data = await goodsGetterFromRozetkaComUa.getGoodsData(browser, categoryName, categoryUrl));
                 selectedSite === 'Allo.ua' &&
                     (data = await goodsGetterFromAlloUa.getGoodsData(browser, categoryName, categoryUrl));
+                selectedSite === 'Chemicalguys.ua' &&
+                    (data = await goodsGetterFromChemicalguysUa.getGoodsData(browser, categoryName, categoryUrl));
                 // console.log('[data]', data);
 
                 server.clients.forEach(client => {

@@ -2,6 +2,7 @@ import logo from '../../resources/images/main-logo.png';
 import rozetka_logo from '../../resources/images/sites-icons/rozetka.png';
 import epicentr_logo from '../../resources/images/sites-icons/epicentrk.png';
 import allo_logo from '../../resources/images/sites-icons/allo.png';
+import chemicalguys_logo from '../../resources/images/sites-icons/chemicalguys.png';
 
 import './Header.scss';
 
@@ -30,6 +31,14 @@ export const Header = ({ setUserSelectSite, setLanguage, language }) => {
             srcLogo: allo_logo,
             altLogo: 'Allo.ua',
             url: 'https://allo.ua/'
+        },
+        {
+            idSite: 4,
+            inputId: 'chemicalguys_ua',
+            inputName: 'chemicalguys_ua',
+            srcLogo: chemicalguys_logo,
+            altLogo: 'Chemicalguys.ua',
+            url: 'https://chemicalguys.ua/'
         }
     ];
 
@@ -59,7 +68,7 @@ export const Header = ({ setUserSelectSite, setLanguage, language }) => {
             </section>
 
             <section className="header__resources">
-                <div>Search input here</div>
+                <div></div>
                 <div className="header__sites-for-parse">
                     {availableSites.map(({ idSite, srcLogo, altLogo, inputId, inputName }) => {
                         return (

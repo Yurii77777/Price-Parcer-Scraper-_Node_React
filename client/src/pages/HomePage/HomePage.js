@@ -4,14 +4,14 @@ import { InstrumentsPanel } from '../../components/InstrumentsPanel/InstrumentsP
 import './HomePage.scss';
 import noImage from '../../resources/images/no-image-icon.png';
 
-export const HomePage = ({ data, isLoading, language, userSelectCategory }) => {
-    
+export const HomePage = ({ data, isLoading, language, propsForInstruments }) => {
     return (
-        
         <ul className="goods-list">
             {isLoading && <Loader />}
-            {data && <InstrumentsPanel data={data} userSelectCategory={userSelectCategory} />}
-            {data && (
+            {data && data.length && (
+                <InstrumentsPanel data={data} propsForInstruments={propsForInstruments} language={language} />
+            )}
+            {data && data.length && (
                 <li className="goods-list__top-item" key={1.11}>
                     <p className="goods-list__top-item-image">
                         {(!language || language === 'EN') && 'Img'}
@@ -33,9 +33,7 @@ export const HomePage = ({ data, isLoading, language, userSelectCategory }) => {
                         {language === 'UA' && 'Назва'}
                         {language === 'RU' && 'Наименование'}
                     </p>
-                    <p
-                        className="goods-list__top-item-price"
-                    >
+                    <p className="goods-list__top-item-price">
                         {(!language || language === 'EN') && 'Price, UAH'}
                         {language === 'UA' && 'Ціна, UAH'}
                         {language === 'RU' && 'Цена, UAH'}
@@ -97,7 +95,9 @@ export const HomePage = ({ data, isLoading, language, userSelectCategory }) => {
                                     {Number(goodPrice).toFixed(2)}
                                 </p>
                                 <p className="goods-list__item-seller">{goodSeller}</p>
-                                <p className="goods-list__item-description">i<span>{goodDescription}</span></p>
+                                <p className="goods-list__item-description">
+                                    i<span>{goodDescription}</span>
+                                </p>
                                 <p className="goods-list__item-status">{goodStatus}</p>
                                 <a
                                     href={goodUrl}
@@ -105,13 +105,14 @@ export const HomePage = ({ data, isLoading, language, userSelectCategory }) => {
                                     title="Go to good page"
                                     target="_blank"
                                     rel="noreferrer"
-                                > </a>
+                                >
+                                </a>
                             </li>
                         );
                     }
                 )}
 
-            {data && (
+            {data && data.length && (
                 <li className="goods-list__bottom-item" key={3.33}>
                     <p className="goods-list__bottom-item-title">
                         {!language && 'Total goods, pcs'}
