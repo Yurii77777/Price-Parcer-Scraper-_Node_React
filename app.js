@@ -1,6 +1,3 @@
-// Connect & settings for Express module and WebSocket
-const express = require('express');
-const config = require('config');
 const WebSocket = require('ws');
 const puppeteer = require('puppeteer');
 
@@ -9,23 +6,7 @@ const goodsGetterFromEpicentrkua = require('./modules/epicentrkUa/getGoodsData')
 const goodsGetterFromAlloUa = require('./modules/alloUa/getGoodsData');
 const goodsGetterFromChemicalguysUa = require('./modules/chemicalguysUa/getChemicalguysData');
 
-const app = express();
-
-const PORT = config.get('port') || 5000;
 const server = new WebSocket.Server({ port: 5050 });
-
-async function start() {
-    try {
-        app.listen(PORT, () => {
-            console.log(`App has been started at http://localhost:${PORT}`);
-        });
-    } catch (error) {
-        console.log('Server Error', error.message);
-        process.exit(1);
-    }
-}
-
-start();
 
 server.on('connection', ws => {
     ws.on('message', message => {

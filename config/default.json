@@ -1,4 +1,0 @@
-{
-    "port": 5000,
-    "jwtSecret": "some secret code"
-}

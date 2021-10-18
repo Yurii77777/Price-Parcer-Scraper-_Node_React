@@ -1,5 +1,3 @@
-const { text } = require('express');
-
 const getGoodsData = async (browser, categoryName, catogoryUrl) => {
     let data = null;
 
