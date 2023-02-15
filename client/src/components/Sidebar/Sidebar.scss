@@ -49,9 +49,11 @@
         display: block;
         position: absolute;
         left: 230px;
-        top: 0px;
+        top: -380px;
         width: 200px;
+        max-height: 530px;
         padding: 5px;
+        overflow: scroll;
     }
 
     &__categories-top-item:hover .sidebar__subcategories-list > li {

@@ -1,21 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
-import { Header } from '../Header/Header';
-import { Sidebar } from '../Sidebar/Sidebar';
-import { Faq } from '../Faq/Faq';
-import { HomePage } from '../../pages/HomePage/HomePage';
-import { Footer } from '../Footer/Footer';
+import { Header } from "../Header/Header";
+import { Sidebar } from "../Sidebar/Sidebar";
+import { Faq } from "../Faq/Faq";
+import { HomePage } from "../../pages/HomePage/HomePage";
+import { Footer } from "../Footer/Footer";
 
 export const App = () => {
+    const [language, setLanguage] = useState("UA");
     const [userSelectSite, setUserSelectSite] = useState({});
     const [userSelectCategory, setUserSelectCategory] = useState({});
     const [data, setData] = useState();
     const [isLoading, setIsLoading] = useState(false);
-    const [language, setLanguage] = useState();
     const [propsForInstruments, setPropsForInstruments] = useState({
         site: null,
-        category: null
+        category: null,
     });
+    const [ws, setWs] = useState(null);
+
+    useEffect(() => {
+        if (!ws) {
+            return setWs(new WebSocket("ws://localhost:5050"));
+        }
+
+        ws.onopen = () => console.log("З єднання встановлено!");
+    }, [ws]);
 
     return (
         <div className="wrapper">
@@ -50,6 +59,7 @@ export const App = () => {
                 setIsLoading={setIsLoading}
                 isLoading={isLoading}
                 language={language}
+                ws={ws}
             />
             <Footer />
         </div>
